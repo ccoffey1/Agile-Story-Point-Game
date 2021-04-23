@@ -1,0 +1,37 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - master
+
+env:
+  AZURE_WEBAPP_NAME: coffey-appservice-test
+  WORKING_DIRECTORY: AppServiceDemo
+
+steps:
+  # Checkout and setup .NET Core
+  - uses: actions/checkout@v2
+
+  - name: Setup .NET Core
+    uses: actions/setup-dotnet@v1
+    with:
+      dotnet-version: '5.0.202'
+
+  - name: Install Dependencies
+    run: dotnet build --configuration Release --no-restore
+
+  - name: Test
+    run: dotnet test --no-restore --verbosity normal
+
+  - name: Publish
+    run: dotnet publish --configuration Release --output 'dotnetcorewebapp'
+
+  - name: 'Deploy to Azure App Services 😎'
+    uses: 'azure/webapps-deploy@v2'
+    with:
+      app-name: ${{ env.AZURE_WEBAPP_NAME }}
+      publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+      package: '${{ env.WORKING_DIRECTORY }}/dotnetcorewebapp'
