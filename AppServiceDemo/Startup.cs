@@ -1,7 +1,10 @@
+using AppServiceDemo.Data.Models;
+using AppServiceDemo.Data.Repository;
+using AppServiceDemo.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,21 +13,38 @@ namespace AppServiceDemo
 {
 	public class Startup
 	{
+		private readonly IConfiguration _configuration;
+
 		public Startup(IConfiguration configuration)
 		{
-			Configuration = configuration;
+			_configuration = configuration;
 		}
-
-		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllersWithViews();
+
+			services.AddDbContext<CosmosDbContext>(options => options.UseCosmos(
+				_configuration.GetValue<string>("Cosmos:EndpointUri"),
+				_configuration.GetValue<string>("Cosmos:PrimaryKey"),
+				databaseName: "PlanningPokerDB"));
+
+			services.AddTransient<IVoteService, VoteService>();
+			services.AddTransient<IVoteRepository, VoteRepository>();
+
 			// In production, the Angular files will be served from this directory
 			services.AddSpaStaticFiles(configuration =>
 			{
 				configuration.RootPath = "ClientApp/dist";
+			});
+
+			services.AddSwaggerDocument(config =>
+			{
+				config.PostProcess = document =>
+				{
+					document.Info.Title = "AppServiceDemo";
+				};
 			});
 		}
 
@@ -42,14 +62,17 @@ namespace AppServiceDemo
 				app.UseHsts();
 			}
 
-			app.UseHttpsRedirection();
+			app.UseRouting();
+			app.UseOpenApi();
+			app.UseSwaggerUi3();
+
+			// app.UseHttpsRedirection();
 			app.UseStaticFiles();
+
 			if (!env.IsDevelopment())
 			{
 				app.UseSpaStaticFiles();
 			}
-
-			app.UseRouting();
 
 			app.UseEndpoints(endpoints =>
 			{
