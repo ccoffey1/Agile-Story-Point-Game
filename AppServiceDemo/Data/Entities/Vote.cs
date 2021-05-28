@@ -1,9 +1,8 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
-namespace AppServiceDemo.Data.Models
+namespace AppServiceDemo.Data.Entities
 {
-	public class Vote
+    public class Vote
 	{
 		public Guid Id { get; set; }
 		public Guid GameSessionId { get; set; }

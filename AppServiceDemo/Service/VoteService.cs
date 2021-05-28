@@ -1,4 +1,4 @@
-﻿using AppServiceDemo.Data.Models;
+﻿using AppServiceDemo.Data.Entities;
 using AppServiceDemo.Data.Repository;
 using Microsoft.Extensions.Logging;
 using System;
