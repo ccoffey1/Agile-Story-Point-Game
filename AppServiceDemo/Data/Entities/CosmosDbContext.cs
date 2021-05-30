@@ -17,7 +17,7 @@ namespace AppServiceDemo.Data.Entities
 				.ToContainer(nameof(Votes))
 				.HasKey(x => x.Id);
 
-			modelBuilder.Entity<Vote>()
+			modelBuilder.Entity<User>()
 				.ToContainer(nameof(Users))
 				.HasKey(x => x.Id);
 		}

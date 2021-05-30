@@ -11,6 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using NSwag;
+using NSwag.Generation.Processors.Security;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using AuthenticationService = AppServiceDemo.Service.AuthenticationService;
 using IAuthenticationService = AppServiceDemo.Service.IAuthenticationService;
@@ -72,15 +75,16 @@ namespace AppServiceDemo
 					document.Info.Title = "AppServiceDemo";
 				};
 
-				config.AddSecurity("Bearer", new OpenApiSecurityScheme
+				config.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
 				{
-					Description = "JWT Authorization header using the Bearer scheme. " +
-									"Example: \"Bearer { token }\"",
+					Type = OpenApiSecuritySchemeType.ApiKey,
 					Name = "Authorization",
 					In = OpenApiSecurityApiKeyLocation.Header,
-					Type = OpenApiSecuritySchemeType.ApiKey,
-					Scheme = "Bearer"
+					Description = "Type into the textbox: Bearer {your JWT token}."
 				});
+
+				config.OperationProcessors.Add(
+					new AspNetCoreOperationSecurityScopeProcessor("JWT"));
 			});
 		}
 

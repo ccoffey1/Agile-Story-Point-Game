@@ -41,13 +41,14 @@ namespace AppServiceDemo.Service
 
             var user = new User()
             {
-                Id = Guid.NewGuid(),
                 GameSessionId = userDto.GameSessionId,
                 FirstName = userDto.FirstName,
                 CreatedAt = DateTime.Now
             };
 
             await _userRepository.CreateAsync(user);
+
+            userDto.Id = user.Id;
 
             return GenerateJSONWebToken(userDto);
         }
