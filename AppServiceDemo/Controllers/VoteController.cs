@@ -1,17 +1,15 @@
-﻿using AppServiceDemo.Data.Models;
-using AppServiceDemo.Data.Repository;
+﻿using AppServiceDemo.Data.Entities;
 using AppServiceDemo.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AppServiceDemo.Controllers
 {
-	[ApiController]
+    [ApiController]
 	[Route("[controller]")]
 	public class VoteController : ControllerBase
 	{

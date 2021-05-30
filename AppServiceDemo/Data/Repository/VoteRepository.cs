@@ -1,4 +1,4 @@
-﻿using AppServiceDemo.Data.Models;
+﻿using AppServiceDemo.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
