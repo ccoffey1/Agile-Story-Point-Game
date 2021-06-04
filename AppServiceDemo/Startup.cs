@@ -15,7 +15,7 @@ using NSwag.Generation.Processors.Security;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AuthenticationService = AppServiceDemo.Service.AuthenticationService;
+using UserService = AppServiceDemo.Service.UserService;
 using IAuthenticationService = AppServiceDemo.Service.IAuthenticationService;
 
 namespace AppServiceDemo
@@ -57,9 +57,7 @@ namespace AppServiceDemo
 				databaseName: "PlanningPokerDB"));
 
 			// repositories and services
-			services.AddTransient<IVoteService, VoteService>();
-			services.AddTransient<IAuthenticationService, AuthenticationService>();
-			services.AddTransient<IVoteRepository, VoteRepository>();
+			services.AddTransient<IAuthenticationService, UserService>();
 			services.AddTransient<IUserRepository, UserRepository>();
 
 			// In production, the Angular files will be served from this directory

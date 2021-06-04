@@ -18,14 +18,14 @@ namespace AppServiceDemo.Service
         Task<string> AuthenticateUserWithGameAsync(UserDto userDto);
     }
 
-    public class AuthenticationService : IAuthenticationService
+    public class UserService : IAuthenticationService
     {
-        private readonly ILogger<AuthenticationService> _logger;
+        private readonly ILogger<UserService> _logger;
         private readonly IConfiguration _config;
         private readonly IUserRepository _userRepository;
 
-        public AuthenticationService(
-            ILogger<AuthenticationService> logger,
+        public UserService(
+            ILogger<UserService> logger,
             IConfiguration config, 
             IUserRepository userRepository)
         {
@@ -46,7 +46,7 @@ namespace AppServiceDemo.Service
                 CreatedAt = DateTime.Now
             };
 
-            await _userRepository.CreateAsync(user);
+            await _userRepository.AddAsync(user);
 
             userDto.Id = user.Id;
 
@@ -67,7 +67,6 @@ namespace AppServiceDemo.Service
                     new Claim(ClaimTypes.Name, userInfo.FirstName)
                     // TODO: Role?
                 },
-                expires: DateTime.Now.AddHours(24),
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
