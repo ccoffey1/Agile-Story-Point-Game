@@ -7,13 +7,13 @@ namespace AppServiceDemo.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class AuthenticationController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly IAuthenticationService _authenticationService;
+        private readonly IUserService _userService;
 
-        public AuthenticationController(IAuthenticationService authenticationService)
+        public UserController(IUserService authenticationService)
         {
-            _authenticationService = authenticationService;
+            _userService = authenticationService;
         }
 
         [HttpPost("authenticate")]
@@ -21,7 +21,7 @@ namespace AppServiceDemo.Controllers
         {
             IActionResult response = Unauthorized();
 
-            string token = await _authenticationService.AuthenticateUserWithGameAsync(user);
+            string token = await _userService.AuthenticateUserWithGameAsync(user);
 
             if (token != null)
             {

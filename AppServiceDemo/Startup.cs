@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UserService = AppServiceDemo.Service.UserService;
-using IAuthenticationService = AppServiceDemo.Service.IAuthenticationService;
+using IUserService = AppServiceDemo.Service.IUserService;
 
 namespace AppServiceDemo
 {
@@ -57,7 +57,7 @@ namespace AppServiceDemo
 				databaseName: "PlanningPokerDB"));
 
 			// repositories and services
-			services.AddTransient<IAuthenticationService, UserService>();
+			services.AddTransient<IUserService, UserService>();
 			services.AddTransient<IUserRepository, UserRepository>();
 
 			// In production, the Angular files will be served from this directory

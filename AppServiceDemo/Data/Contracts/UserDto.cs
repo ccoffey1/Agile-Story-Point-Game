@@ -10,6 +10,5 @@ namespace AppServiceDemo.Data.Contracts
         public Guid GameSessionId { get; set; }
         [Required]
         public string FirstName { get; set; }
-        public DateTime CreatedAt { get; set; }
     }
 }

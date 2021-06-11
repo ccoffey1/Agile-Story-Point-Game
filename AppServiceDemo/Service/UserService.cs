@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace AppServiceDemo.Service
 {
-    public interface IAuthenticationService
+    public interface IUserService
     {
         Task<string> AuthenticateUserWithGameAsync(UserDto userDto);
     }
 
-    public class UserService : IAuthenticationService
+    public class UserService : IUserService
     {
         private readonly ILogger<UserService> _logger;
         private readonly IConfiguration _config;
