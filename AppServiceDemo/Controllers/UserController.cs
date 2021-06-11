@@ -1,5 +1,4 @@
-﻿using AppServiceDemo.Data.Contracts;
-using AppServiceDemo.Service;
+﻿using AppServiceDemo.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

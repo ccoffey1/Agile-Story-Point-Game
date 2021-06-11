@@ -1,5 +1,4 @@
 ﻿using AppServiceDemo.Data.Contracts;
-using AppServiceDemo.Data.Entities;
 using AppServiceDemo.Data.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;

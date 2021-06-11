@@ -1,7 +1,6 @@
 ﻿using AppServiceDemo.Data.Entities;
 using AppServiceDemo.Data.Repository.Abstraction;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AppServiceDemo.Data.Repository

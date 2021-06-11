@@ -1,22 +1,17 @@
-using AppServiceDemo.Data.Entities;
 using AppServiceDemo.Data.Repository;
 using AppServiceDemo.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using NSwag.Generation.Processors.Security;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UserService = AppServiceDemo.Service.UserService;
-using IUserService = AppServiceDemo.Service.IUserService;
 
 namespace AppServiceDemo
 {
