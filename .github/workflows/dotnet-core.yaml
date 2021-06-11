@@ -9,7 +9,7 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: coffey-appservice-test
-  WORKING_DIRECTORY: ./planning_poker_app
+  WORKING_DIRECTORY: planning_poker_app
 
 
 jobs:
