@@ -13,7 +13,8 @@ namespace AppServiceDemo.Data.Entities
 
         [Required]
         [StringLength(60, MinimumLength = 3)]
-        public string FirstName { get; set; }
+        public string PlayerName { get; set; }
         public DateTime CreatedAt { get; set; }
+        public GameSession GameSession { get; set; }
     }
 }

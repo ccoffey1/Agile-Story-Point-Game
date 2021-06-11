@@ -14,5 +14,6 @@ namespace AppServiceDemo.Data.Entities
         [Required]
         [StringLength(30, MinimumLength = 3)]
         public string TeamName { get; set; }
+        public User Owner { get; set;  }
     }
 }

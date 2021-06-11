@@ -7,8 +7,8 @@ namespace AppServiceDemo.Data.Contracts
     {
         public Guid Id { get; set; }
         [Required]
-        public Guid GameSessionId { get; set; }
+        public string PlayerName { get; set; }
         [Required]
-        public string FirstName { get; set; }
+        public Guid GameSessionId { get; set; }
     }
 }

@@ -21,6 +21,9 @@ namespace AppServiceDemo.Data.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>().HasOne(x => x.GameSession);
+            modelBuilder.Entity<GameSession>().HasOne(x => x.Owner);
+
             // using reflection to dynamically create collections in cosmos for each dbset in this class
             var dbSets = typeof(CosmosDbContext).GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Where(p => p.PropertyType.IsGenericType && typeof(DbSet<>).IsAssignableFrom(p.PropertyType.GetGenericTypeDefinition()));

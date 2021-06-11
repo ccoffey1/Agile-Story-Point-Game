@@ -1,6 +1,9 @@
 ﻿using AppServiceDemo.Data.Contracts;
 using AppServiceDemo.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AppServiceDemo.Controllers
@@ -10,25 +13,28 @@ namespace AppServiceDemo.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IGameSessionService _gameSessionService;
 
-        public UserController(IUserService authenticationService)
+        public UserController(IUserService authenticationService, IGameSessionService gameSessionService)
         {
             _userService = authenticationService;
+            _gameSessionService = gameSessionService;
         }
 
-        [HttpPost("authenticate")]
-        public async Task<IActionResult> Authenticate(UserDto user)
+        [HttpGet]
+        [Authorize]
+        [Route("ownedgame")]
+        public async Task<IActionResult> GetOwnedGame()
         {
-            IActionResult response = Unauthorized();
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            Guid userId = Guid.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            string token = await _userService.AuthenticateUserWithGameAsync(user);
+            var gameSession = await _gameSessionService.GetByOwnerIdAsync(userId);
 
-            if (token != null)
-            {
-                response = Ok(new[] { token });
-            }
+            if (gameSession == null) 
+                return NotFound();
 
-            return response;
+            return Ok(gameSession.Id);
         }
     }
 }

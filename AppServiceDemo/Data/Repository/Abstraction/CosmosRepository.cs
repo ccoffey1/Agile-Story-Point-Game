@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,7 +9,7 @@ namespace AppServiceDemo.Data.Repository.Abstraction
         where TEntity : class
         where TContext : DbContext
     {
-        private readonly TContext _context;
+        internal readonly TContext _context;
 
         public CosmosRepository(TContext context)
         {
@@ -36,7 +37,7 @@ namespace AppServiceDemo.Data.Repository.Abstraction
             return entity;
         }
 
-        public async Task<TEntity> GetAsync(int id)
+        public async Task<TEntity> GetAsync(Guid id)
         {
             return await _context.Set<TEntity>().FindAsync(id);
         }

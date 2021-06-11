@@ -1,4 +1,6 @@
-﻿using AppServiceDemo.Data.Repository;
+﻿using AppServiceDemo.Data.Contracts;
+using AppServiceDemo.Data.Entities;
+using AppServiceDemo.Data.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,7 +10,8 @@ namespace AppServiceDemo.Service
 {
     public interface IGameSessionService
     {
-        Task<string> CreateGame(string playerName, string teamName);
+        Task<string> CreateGameAsync(string playerName, string teamName);
+        Task<GameSession> GetByOwnerIdAsync(Guid userId);
     }
 
     public class GameSessionService : IGameSessionService
@@ -16,25 +19,57 @@ namespace AppServiceDemo.Service
         private readonly ILogger<GameSessionService> _logger;
         private readonly IConfiguration _config;
         private readonly IUserRepository _userRepository;
+        private readonly IGameSessionRepository _gameSessionRepository;
         private readonly IUserService _userService;
 
         public GameSessionService(
             ILogger<GameSessionService> logger,
             IConfiguration config,
             IUserRepository userRepository,
-            IUserService userService)
+            IUserService userService, 
+            IGameSessionRepository gameSessionRepository)
         {
             _logger = logger;
             _config = config;
             _userRepository = userRepository;
             _userService = userService;
+            _gameSessionRepository = gameSessionRepository;
         }
 
-        public Task<string> CreateGame(string playerName, string teamName)
+        public async Task<string> CreateGameAsync(string playerName, string teamName)
         {
-            // TODO: Create game
-            // TODO: Create user tied to game - return JWT
-            throw new NotImplementedException();
+            _logger.LogInformation($"Attempting to create a game \"{teamName}\" owned by \"{playerName}\"");
+
+            bool userExists = (await _userRepository.GetByPlayerNameAsync(playerName)) != null;
+            if (userExists) throw new ArgumentException($"Invalid name \"{playerName}\". Player already exists.");
+
+            // create game and user
+            var gameSession = await _gameSessionRepository.AddAsync(new GameSession()
+            {
+                TeamName =  teamName
+            });
+
+            var user = await _userRepository.AddAsync(new User
+            {
+                PlayerName = playerName,
+                GameSessionId = gameSession.Id
+            });
+
+            // link user to game
+            gameSession.OwnerUserId = user.Id;
+            await _gameSessionRepository.UpdateAsync(gameSession);
+
+            return _userService.GenerateUserJWT(new UserDto
+            {
+                Id = user.Id,
+                PlayerName = user.PlayerName,
+                GameSessionId = user.GameSessionId
+            });
+        }
+
+        public async Task<GameSession> GetByOwnerIdAsync(Guid userId)
+        {
+            return await _gameSessionRepository.GetByOwnerIdAsync(userId);
         }
     }
 }
