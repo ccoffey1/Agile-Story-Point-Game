@@ -9,12 +9,11 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: coffey-appservice-test
-  WORKING_DIRECTORY: AppServiceDemo
+  WORKING_DIRECTORY: PlanningPokerApp
 
-defaults:
-  run:
-    shell: bash
-    working-directory: ${{ env.WORKING_DIRECTORY }}
+run:
+  shell: bash
+  working-directory: ${{ env.WORKING_DIRECTORY }}
 
 jobs:
   build:
