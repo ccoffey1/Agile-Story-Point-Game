@@ -1,22 +1,17 @@
-using AppServiceDemo.Data.Entities;
 using AppServiceDemo.Data.Repository;
 using AppServiceDemo.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using NSwag.Generation.Processors.Security;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AuthenticationService = AppServiceDemo.Service.AuthenticationService;
-using IAuthenticationService = AppServiceDemo.Service.IAuthenticationService;
 
 namespace AppServiceDemo
 {
@@ -43,6 +38,7 @@ namespace AppServiceDemo
 						ValidateIssuer = true,
 						ValidateAudience = true,
 						ValidateLifetime = true,
+						RequireExpirationTime = false,
 						ValidateIssuerSigningKey = true,
 						ValidIssuer = Configuration["Jwt:Issuer"],
 						ValidAudience = Configuration["Jwt:Issuer"],
@@ -50,17 +46,9 @@ namespace AppServiceDemo
 					};
 				});
 
-			// Cosmos DB
-			services.AddDbContext<CosmosDbContext>(options => options.UseCosmos(
-				Configuration.GetValue<string>("Cosmos:EndpointUri"),
-				Configuration.GetValue<string>("Cosmos:PrimaryKey"),
-				databaseName: "PlanningPokerDB"));
-
 			// repositories and services
-			services.AddTransient<IVoteService, VoteService>();
-			services.AddTransient<IAuthenticationService, AuthenticationService>();
-			services.AddTransient<IVoteRepository, VoteRepository>();
-			services.AddTransient<IUserRepository, UserRepository>();
+			services.AddContextAndRepositories(Configuration);
+			services.AddServices();
 
 			// In production, the Angular files will be served from this directory
 			services.AddSpaStaticFiles(configuration =>
@@ -72,7 +60,7 @@ namespace AppServiceDemo
 			{
 				config.PostProcess = document =>
 				{
-					document.Info.Title = "AppServiceDemo";
+					document.Info.Title = "PlanningPoker";
 				};
 
 				config.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
@@ -93,11 +81,11 @@ namespace AppServiceDemo
 		{
 			if (env.IsDevelopment())
 			{
-				app.UseDeveloperExceptionPage();
+				app.UseExceptionHandler("/error-local-development");
 			}
 			else
 			{
-				app.UseExceptionHandler("/Error");
+				app.UseExceptionHandler("/error");
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}

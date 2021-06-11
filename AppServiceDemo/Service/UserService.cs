@@ -1,5 +1,4 @@
 ﻿using AppServiceDemo.Data.Contracts;
-using AppServiceDemo.Data.Entities;
 using AppServiceDemo.Data.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -13,47 +12,44 @@ using System.Threading.Tasks;
 
 namespace AppServiceDemo.Service
 {
-    public interface IAuthenticationService
+    public interface IUserService
     {
-        Task<string> AuthenticateUserWithGameAsync(UserDto userDto);
+       string GenerateUserJWT(UserDto userDto);
+       Task<UserDto> GetAsync(Guid id);
     }
 
-    public class AuthenticationService : IAuthenticationService
+    public class UserService : IUserService
     {
-        private readonly ILogger<AuthenticationService> _logger;
+        private readonly ILogger<UserService> _logger;
         private readonly IConfiguration _config;
         private readonly IUserRepository _userRepository;
+        private readonly IGameSessionRepository _gameSessionRepository;
 
-        public AuthenticationService(
-            ILogger<AuthenticationService> logger,
-            IConfiguration config, 
-            IUserRepository userRepository)
+        public UserService(
+            ILogger<UserService> logger,
+            IConfiguration config,
+            IUserRepository userRepository, 
+            IGameSessionRepository gameSessionRepository)
         {
             _logger = logger;
             _config = config;
             _userRepository = userRepository;
+            _gameSessionRepository = gameSessionRepository;
         }
 
-        public async Task<string> AuthenticateUserWithGameAsync(UserDto userDto)
+        public async Task<UserDto> GetAsync(Guid id)
         {
-            // TODO: fetch game from gameSessionId, verify it exists
-            // We will delete all users belonging to a game when said game exits?
+            var user = await _userRepository.GetAsync(id);
 
-            var user = new User()
+            return new UserDto()
             {
-                GameSessionId = userDto.GameSessionId,
-                FirstName = userDto.FirstName,
-                CreatedAt = DateTime.Now
+                Id = user.Id,
+                PlayerName = user.PlayerName,
+                GameSessionId = user.GameSessionId
             };
-
-            await _userRepository.CreateAsync(user);
-
-            userDto.Id = user.Id;
-
-            return GenerateJSONWebToken(userDto);
         }
 
-        private string GenerateJSONWebToken(UserDto userInfo)
+        public string GenerateUserJWT(UserDto userDto)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -63,11 +59,10 @@ namespace AppServiceDemo.Service
                 _config["Jwt:Issuer"],
                 claims: new List<Claim>
                 {
-                    new Claim(ClaimTypes.NameIdentifier, userInfo.Id.ToString()),
-                    new Claim(ClaimTypes.Name, userInfo.FirstName)
+                    new Claim(ClaimTypes.NameIdentifier, userDto.Id.ToString()),
+                    new Claim(ClaimTypes.Name, userDto.PlayerName)
                     // TODO: Role?
                 },
-                expires: DateTime.Now.AddHours(24),
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

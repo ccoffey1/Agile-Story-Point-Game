@@ -1,38 +1,23 @@
 ﻿using AppServiceDemo.Data.Entities;
+using AppServiceDemo.Data.Repository.Abstraction;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Threading.Tasks;
 
 namespace AppServiceDemo.Data.Repository
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User>
     {
-        Task<User> CreateAsync(User userEntity);
-        Task<User> GetByIdAsync(Guid userId);
+        Task<User> GetByPlayerNameAsync(string playerName);
     }
 
-    public class UserRepository : IUserRepository
+    public class UserRepository : CosmosRepository<User, CosmosDbContext>, IUserRepository
     {
-        private readonly CosmosDbContext _dbContext;
+        public UserRepository(CosmosDbContext context) : base(context)
+        { }
 
-        public UserRepository(CosmosDbContext dbContext)
+        public async Task<User> GetByPlayerNameAsync(string playerName)
         {
-            _dbContext = dbContext;
-            _dbContext.Database.EnsureCreated();
-        }
-
-        public async Task<User> CreateAsync(User user)
-        {
-            var result = _dbContext.Users.Add(user);
-            await _dbContext.SaveChangesAsync();
-            return result.Entity;
-        }
-
-        public async Task<User> GetByIdAsync(Guid userId)
-        {
-            return await _dbContext.Users
-                .AsNoTracking()
-                .SingleOrDefaultAsync(x => x.Id == userId);
+            return await _context.Users.FirstOrDefaultAsync(x => x.PlayerName == playerName);
         }
     }
 }
