@@ -43,6 +43,7 @@ namespace AppServiceDemo
 						ValidateIssuer = true,
 						ValidateAudience = true,
 						ValidateLifetime = true,
+						RequireExpirationTime = false,
 						ValidateIssuerSigningKey = true,
 						ValidIssuer = Configuration["Jwt:Issuer"],
 						ValidAudience = Configuration["Jwt:Issuer"],
@@ -50,15 +51,9 @@ namespace AppServiceDemo
 					};
 				});
 
-			// Cosmos DB
-			services.AddDbContext<CosmosDbContext>(options => options.UseCosmos(
-				Configuration.GetValue<string>("Cosmos:EndpointUri"),
-				Configuration.GetValue<string>("Cosmos:PrimaryKey"),
-				databaseName: "PlanningPokerDB"));
-
 			// repositories and services
-			services.AddTransient<IUserService, UserService>();
-			services.AddTransient<IUserRepository, UserRepository>();
+			services.AddContextAndRepositories(Configuration);
+			services.AddServices();
 
 			// In production, the Angular files will be served from this directory
 			services.AddSpaStaticFiles(configuration =>
@@ -70,7 +65,7 @@ namespace AppServiceDemo
 			{
 				config.PostProcess = document =>
 				{
-					document.Info.Title = "AppServiceDemo";
+					document.Info.Title = "PlanningPoker";
 				};
 
 				config.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
