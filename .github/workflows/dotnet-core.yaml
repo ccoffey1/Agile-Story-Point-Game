@@ -62,7 +62,6 @@ jobs:
       run:
         shell: bash
         working-directory: ${{ env.WORKING_DIRECTORY }}
-    needs: test
     if: github.ref == 'refs/head/master'
     steps:
     - name: 'Deploy to Azure App Services 😎'
