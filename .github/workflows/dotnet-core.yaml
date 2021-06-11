@@ -11,14 +11,14 @@ env:
   AZURE_WEBAPP_NAME: coffey-appservice-test
   WORKING_DIRECTORY: AppServiceDemo
 
+defaults:
+  run:
+    shell: bash
+    working-directory: ${{ env.WORKING_DIRECTORY }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: ${{ env.WORKING_DIRECTORY }}
-
     steps:
       # Checkout and setup .NET Core
       - uses: actions/checkout@v2
