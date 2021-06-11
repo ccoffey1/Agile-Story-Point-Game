@@ -22,7 +22,7 @@ jobs:
     steps:
       # Checkout and setup .NET Core
       - uses: actions/checkout@v2
-      
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
@@ -31,28 +31,28 @@ jobs:
       - name: Install Dependencies
         run: dotnet build --configuration Release
     
-    test:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Execute tests
-          run: dotnet test --no-restore --verbosity normal
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute tests
+        run: dotnet test --no-restore --verbosity normal
 
-    publish:
-      runs-on: ubuntu-latest
-      needs: test
-      if: github.ref == 'refs/head/master'
-      steps:
-        - name: Publish artifacts
-          run: dotnet publish --configuration Release --output 'dotnetcorewebapp'
+  publish:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/head/master'
+    steps:
+      - name: Publish artifacts
+        run: dotnet publish --configuration Release --output 'dotnetcorewebapp'
 
-    deploy:
-      runs-on: ubuntu-latest
-      needs: test
-      if: github.ref == 'refs/head/master'
-      steps:
-      - name: 'Deploy to Azure App Services 😎'
-        uses: 'azure/webapps-deploy@v2'
-        with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-          package: '${{ env.WORKING_DIRECTORY }}/dotnetcorewebapp'
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/head/master'
+    steps:
+    - name: 'Deploy to Azure App Services 😎'
+      uses: 'azure/webapps-deploy@v2'
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+        package: '${{ env.WORKING_DIRECTORY }}/dotnetcorewebapp'
