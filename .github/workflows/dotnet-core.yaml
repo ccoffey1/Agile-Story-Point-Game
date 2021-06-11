@@ -11,18 +11,18 @@ env:
   AZURE_WEBAPP_NAME: coffey-appservice-test
   WORKING_DIRECTORY: AppServiceDemo
 
+defaults:
+  run:
+    working-directory: web
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: ${{ env.WORKING_DIRECTORY }}
 
     steps:
       # Checkout and setup .NET Core
       - uses: actions/checkout@v2
-      
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
@@ -33,10 +33,6 @@ jobs:
     
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: ${{ env.WORKING_DIRECTORY }}
     needs: build
     steps:
       - name: Execute tests
@@ -44,10 +40,6 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: ${{ env.WORKING_DIRECTORY }}
     needs: test
     if: github.ref == 'refs/head/master'
     steps:
@@ -56,10 +48,6 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: ${{ env.WORKING_DIRECTORY }}
     needs: publish
     if: github.ref == 'refs/head/master'
     steps:
