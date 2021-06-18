@@ -6,7 +6,7 @@ namespace AppServiceDemo.Service
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
-            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IPlayerService, PlayerService>();
             services.AddTransient<IGameSessionService, GameSessionService>();
 
             return services;

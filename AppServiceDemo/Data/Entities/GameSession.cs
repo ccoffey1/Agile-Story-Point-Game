@@ -1,19 +1,17 @@
-﻿using System;
+﻿using AppServiceDemo.Data.Entities.Base;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AppServiceDemo.Data.Entities
 {
-    public class GameSession
+    public class GameSession : TimeStampedEntity
     {
         [Key]
-        public Guid Id { get; set; }
-
-        [Required]
-        public Guid OwnerUserId { get; set; }
-
+        public int Id { get; set; }
         [Required]
         [StringLength(30, MinimumLength = 3)]
         public string TeamName { get; set; }
-        public User Owner { get; set;  }
+
+        public ICollection<Player> Players { get; set; }
     }
 }

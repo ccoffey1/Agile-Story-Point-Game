@@ -4,6 +4,7 @@ using AppServiceDemo.Data.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AppServiceDemo.Service
@@ -11,65 +12,58 @@ namespace AppServiceDemo.Service
     public interface IGameSessionService
     {
         Task<string> CreateGameAsync(string playerName, string teamName);
-        Task<GameSession> GetByOwnerIdAsync(Guid userId);
     }
 
     public class GameSessionService : IGameSessionService
     {
         private readonly ILogger<GameSessionService> _logger;
-        private readonly IConfiguration _config;
-        private readonly IUserRepository _userRepository;
+        private readonly IPlayerRepository _playerRepository;
         private readonly IGameSessionRepository _gameSessionRepository;
-        private readonly IUserService _userService;
+        private readonly IPlayerService _playerService;
 
         public GameSessionService(
             ILogger<GameSessionService> logger,
             IConfiguration config,
-            IUserRepository userRepository,
-            IUserService userService, 
+            IPlayerRepository playerRepository,
+            IPlayerService playerService, 
             IGameSessionRepository gameSessionRepository)
         {
             _logger = logger;
-            _config = config;
-            _userRepository = userRepository;
-            _userService = userService;
+            _playerRepository = playerRepository;
+            _playerService = playerService;
             _gameSessionRepository = gameSessionRepository;
         }
 
         public async Task<string> CreateGameAsync(string playerName, string teamName)
         {
-            _logger.LogInformation($"Attempting to create a game \"{teamName}\" owned by \"{playerName}\"");
+            _logger.LogInformation($"Attempting to create a game \"{teamName}\" requested by player \"{playerName}\"");
 
-            bool userExists = (await _userRepository.GetByPlayerNameAsync(playerName)) != null;
-            if (userExists) throw new ArgumentException($"Invalid name \"{playerName}\". Player already exists.");
+            bool playerExists = (await _playerRepository.GetByPlayerNameAsync(playerName)) != null;
+            if (playerExists) throw new ArgumentException($"Invalid name \"{playerName}\". Player already exists.");
 
-            // create game and user
-            var gameSession = await _gameSessionRepository.AddAsync(new GameSession()
+            Player player = null;
+
+            await _gameSessionRepository.ExecuteInTransaction(async () =>
             {
-                TeamName =  teamName
+                player = new Player
+                {
+                    Name = playerName
+                };
+
+                // create game and player
+                var gameSession = await _gameSessionRepository.AddAsync(new GameSession()
+                {
+                    TeamName = teamName,
+                    Players = new List<Player>() { player }
+                });
             });
 
-            var user = await _userRepository.AddAsync(new User
+            return _playerService.GeneratePlayerJWT(new PlayerDto
             {
-                PlayerName = playerName,
-                GameSessionId = gameSession.Id
+                Id = player.Id,
+                PlayerName = player.Name,
+                GameSessionId = player.GameSessionId
             });
-
-            // link user to game
-            gameSession.OwnerUserId = user.Id;
-            await _gameSessionRepository.UpdateAsync(gameSession);
-
-            return _userService.GenerateUserJWT(new UserDto
-            {
-                Id = user.Id,
-                PlayerName = user.PlayerName,
-                GameSessionId = user.GameSessionId
-            });
-        }
-
-        public async Task<GameSession> GetByOwnerIdAsync(Guid userId)
-        {
-            return await _gameSessionRepository.GetByOwnerIdAsync(userId);
         }
     }
 }

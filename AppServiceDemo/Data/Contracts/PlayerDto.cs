@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AppServiceDemo.Data.Contracts
 {
-    public class UserDto
+    public class PlayerDto
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         [Required]
         public string PlayerName { get; set; }
         [Required]
-        public Guid GameSessionId { get; set; }
+        public int GameSessionId { get; set; }
     }
 }

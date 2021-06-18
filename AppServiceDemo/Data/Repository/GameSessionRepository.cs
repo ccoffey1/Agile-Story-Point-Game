@@ -1,24 +1,17 @@
 ﻿using AppServiceDemo.Data.Entities;
 using AppServiceDemo.Data.Repository.Abstraction;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace AppServiceDemo.Data.Repository
 {
     public interface IGameSessionRepository : IRepository<GameSession>
-    {
-        Task<GameSession> GetByOwnerIdAsync(Guid userId);
-    }
+    { }
 
-    public class GameSessionRepository : CosmosRepository<GameSession, CosmosDbContext>, IGameSessionRepository
+    public class GameSessionRepository : BaseRepository<GameSession, ApplicationContext>, IGameSessionRepository
     {
-        public GameSessionRepository(CosmosDbContext context) : base(context)
+        public GameSessionRepository(
+            ApplicationContext context, 
+            ILogger<GameSessionRepository> logger) : base(context, logger)
         { }
-
-        public async Task<GameSession> GetByOwnerIdAsync(Guid userId)
-        {
-            return await _context.GameSessions.FirstOrDefaultAsync(x => x.OwnerUserId == userId);
-        }
     }
 }
