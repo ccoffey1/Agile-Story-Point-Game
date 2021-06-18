@@ -1,8 +1,10 @@
 ﻿using AppServiceDemo.Data.Entities.Base;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace AppServiceDemo.Data.Entities
 {
+    [Index(nameof(Name))]
     public class Player : TimeStampedEntity
     {
         [Key]

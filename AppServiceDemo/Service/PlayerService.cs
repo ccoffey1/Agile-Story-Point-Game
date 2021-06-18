@@ -1,9 +1,8 @@
-﻿using AppServiceDemo.Data.Contracts;
+﻿using AppServiceDemo.Data.Entities;
 using AppServiceDemo.Data.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -14,8 +13,7 @@ namespace AppServiceDemo.Service
 {
     public interface IPlayerService
     {
-       string GeneratePlayerJWT(PlayerDto playerDto);
-       Task<PlayerDto> GetAsync(int id);
+       string GeneratePlayerJWT(Player player);
     }
 
     public class PlayerService : IPlayerService
@@ -37,23 +35,9 @@ namespace AppServiceDemo.Service
             _gameSessionRepository = gameSessionRepository;
         }
 
-        public async Task<PlayerDto> GetAsync(int id)
+        public string GeneratePlayerJWT(Player player)
         {
-            _logger.LogInformation($"Fetching player by id {id}");
-
-            var player = await _playerRepository.GetAsync(id);
-
-            return new PlayerDto()
-            {
-                Id = player.Id,
-                PlayerName = player.Name,
-                GameSessionId = player.GameSessionId
-            };
-        }
-
-        public string GeneratePlayerJWT(PlayerDto playerDto)
-        {
-            _logger.LogInformation("Generating JWT for player", playerDto);
+            _logger.LogInformation("Generating JWT for player", player);
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -63,8 +47,8 @@ namespace AppServiceDemo.Service
                 _config["Jwt:Issuer"],
                 claims: new List<Claim>
                 {
-                    new Claim(ClaimTypes.NameIdentifier, playerDto.Id.ToString()),
-                    new Claim(ClaimTypes.Name, playerDto.PlayerName)
+                    new Claim(ClaimTypes.NameIdentifier, player.Id.ToString()),
+                    new Claim(ClaimTypes.Name, player.Name)
                     // TODO: Role?
                 },
                 signingCredentials: credentials);

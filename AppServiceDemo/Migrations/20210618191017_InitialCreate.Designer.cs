@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppServiceDemo.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20210618172325_InitialCreate")]
+    [Migration("20210618191017_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,10 @@ namespace AppServiceDemo.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("TeamName")
+                    b.Property<string>("JoinCode")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
@@ -40,6 +43,8 @@ namespace AppServiceDemo.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("JoinCode");
 
                     b.ToTable("GameSession");
                 });
@@ -68,6 +73,8 @@ namespace AppServiceDemo.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GameSessionId");
+
+                    b.HasIndex("Name");
 
                     b.ToTable("Player");
                 });

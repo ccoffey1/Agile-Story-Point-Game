@@ -13,7 +13,8 @@ namespace AppServiceDemo.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TeamName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    JoinCode = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -45,9 +46,19 @@ namespace AppServiceDemo.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_GameSession_JoinCode",
+                table: "GameSession",
+                column: "JoinCode");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Player_GameSessionId",
                 table: "Player",
                 column: "GameSessionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Player_Name",
+                table: "Player",
+                column: "Name");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

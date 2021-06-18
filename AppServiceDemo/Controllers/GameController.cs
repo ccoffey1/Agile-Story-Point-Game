@@ -1,5 +1,4 @@
-﻿using AppServiceDemo.Data.Repository;
-using AppServiceDemo.Service;
+﻿using AppServiceDemo.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
@@ -20,10 +19,18 @@ namespace AppServiceDemo.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create(string playerName, string teamName)
+        public async Task<IActionResult> Create(string playerName, string gameSessionName)
         {
+            _logger.LogInformation($"Received request to create player {playerName} and game {gameSessionName}");
+            var newGameResponse = await _gameSessionService.CreateGameAsync(playerName, gameSessionName);
+            return Ok(newGameResponse);
+        }
 
-            string playerJwt = await _gameSessionService.CreateGameAsync(playerName, teamName);
+        [HttpPost("join")]
+        public async Task<IActionResult> Join(string playerName, string joinCode)
+        {
+            _logger.LogInformation($"Received request to create player {playerName} and join game with code {joinCode}");
+            string playerJwt = await _gameSessionService.JoinNewPlayerToGameAsync(playerName, joinCode);
             return Ok(playerJwt);
         }
     }
