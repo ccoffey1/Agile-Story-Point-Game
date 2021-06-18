@@ -17,7 +17,6 @@ namespace AppServiceDemo.Service
     public class GameSessionService : IGameSessionService
     {
         private readonly ILogger<GameSessionService> _logger;
-        private readonly IConfiguration _config;
         private readonly IPlayerRepository _playerRepository;
         private readonly IGameSessionRepository _gameSessionRepository;
         private readonly IPlayerService _playerService;
@@ -30,7 +29,6 @@ namespace AppServiceDemo.Service
             IGameSessionRepository gameSessionRepository)
         {
             _logger = logger;
-            _config = config;
             _playerRepository = playerRepository;
             _playerService = playerService;
             _gameSessionRepository = gameSessionRepository;
@@ -38,7 +36,7 @@ namespace AppServiceDemo.Service
 
         public async Task<string> CreateGameAsync(string playerName, string teamName)
         {
-            _logger.LogInformation($"Attempting to create a game \"{teamName}\" owned by player \"{playerName}\"");
+            _logger.LogInformation($"Attempting to create a game \"{teamName}\" requested by player \"{playerName}\"");
 
             bool playerExists = (await _playerRepository.GetByPlayerNameAsync(playerName)) != null;
             if (playerExists) throw new ArgumentException($"Invalid name \"{playerName}\". Player already exists.");

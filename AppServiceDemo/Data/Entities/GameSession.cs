@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using AppServiceDemo.Data.Entities.Base;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AppServiceDemo.Data.Entities
 {
-    public class GameSession
+    public class GameSession : TimeStampedEntity
     {
         [Key]
         public int Id { get; set; }
