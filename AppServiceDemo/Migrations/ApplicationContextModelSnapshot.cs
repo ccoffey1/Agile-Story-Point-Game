@@ -29,7 +29,10 @@ namespace AppServiceDemo.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("TeamName")
+                    b.Property<string>("JoinCode")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
@@ -38,6 +41,8 @@ namespace AppServiceDemo.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("JoinCode");
 
                     b.ToTable("GameSession");
                 });
@@ -66,6 +71,8 @@ namespace AppServiceDemo.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GameSessionId");
+
+                    b.HasIndex("Name");
 
                     b.ToTable("Player");
                 });

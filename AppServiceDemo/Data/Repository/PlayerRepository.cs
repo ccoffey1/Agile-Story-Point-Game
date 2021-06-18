@@ -8,7 +8,7 @@ namespace AppServiceDemo.Data.Repository
 {
     public interface IPlayerRepository : IRepository<Player>
     {
-        Task<Player> GetByPlayerNameAsync(string playerName);
+        Task<Player> GetByNameAsync(string playerName);
     }
 
     public class PlayerRepository : BaseRepository<Player, ApplicationContext>, IPlayerRepository
@@ -18,7 +18,7 @@ namespace AppServiceDemo.Data.Repository
             ILogger<PlayerRepository> logger) : base(context, logger)
         { }
 
-        public async Task<Player> GetByPlayerNameAsync(string playerName)
+        public async Task<Player> GetByNameAsync(string playerName)
         {
             return await _context.Players.FirstOrDefaultAsync(x => x.Name == playerName);
         }

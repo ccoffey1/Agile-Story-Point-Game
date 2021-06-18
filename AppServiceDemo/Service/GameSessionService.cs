@@ -5,13 +5,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AppServiceDemo.Service
 {
     public interface IGameSessionService
     {
-        Task<string> CreateGameAsync(string playerName, string teamName);
+        Task<NewGameResponseDto> CreateGameAsync(string playerName, string gameSessionName);
+        Task<string> JoinNewPlayerToGameAsync(string playerName, string gameSessionName);
     }
 
     public class GameSessionService : IGameSessionService
@@ -34,36 +36,53 @@ namespace AppServiceDemo.Service
             _gameSessionRepository = gameSessionRepository;
         }
 
-        public async Task<string> CreateGameAsync(string playerName, string teamName)
+        public async Task<NewGameResponseDto> CreateGameAsync(string playerName, string gameSessionName)
         {
-            _logger.LogInformation($"Attempting to create a game \"{teamName}\" requested by player \"{playerName}\"");
+            _logger.LogInformation($"Attempting to create a game {gameSessionName} requested by player {playerName}");
 
-            bool playerExists = (await _playerRepository.GetByPlayerNameAsync(playerName)) != null;
-            if (playerExists) throw new ArgumentException($"Invalid name \"{playerName}\". Player already exists.");
-
-            Player player = null;
-
-            await _gameSessionRepository.ExecuteInTransaction(async () =>
+            var player = new Player
             {
-                player = new Player
-                {
-                    Name = playerName
-                };
+                Name = playerName
+            };
 
-                // create game and player
-                var gameSession = await _gameSessionRepository.AddAsync(new GameSession()
-                {
-                    TeamName = teamName,
-                    Players = new List<Player>() { player }
-                });
+            var gameSession = await _gameSessionRepository.AddAsync(new GameSession()
+            {
+                Name = gameSessionName,
+                Players = new List<Player>() { player },
+                JoinCode = Guid.NewGuid().ToString() // TODO: Generate codes not using Guids
             });
 
-            return _playerService.GeneratePlayerJWT(new PlayerDto
+            return new NewGameResponseDto()
             {
-                Id = player.Id,
-                PlayerName = player.Name,
-                GameSessionId = player.GameSessionId
-            });
+                PlayerJWT = _playerService.GeneratePlayerJWT(player),
+                GameJoinCode = gameSession.JoinCode
+            };
+        }
+
+        public async Task<string> JoinNewPlayerToGameAsync(string playerName, string joinCode)
+        {
+            var gameSession = await _gameSessionRepository.GetByJoinCodeAsync(joinCode);
+
+            if (gameSession == null)
+            {
+                throw new ArgumentException($"Game for join code {joinCode} does not exist.");
+            }
+
+            if (gameSession.Players.Any(x => x.Name == playerName))
+            {
+                throw new ArgumentException($"Invalid name {playerName}. Player already exists in game {gameSession.Name}.");
+            }
+
+            var player = new Player
+            {
+                Name = playerName
+            };
+            
+            gameSession.Players.Add(player);
+
+            await _gameSessionRepository.UpdateAsync(gameSession);
+
+            return _playerService.GeneratePlayerJWT(player);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace AppServiceDemo.Controllers
     {
         [HttpGet]
         [Authorize]
-        [Route("dumpplayerdata")]
+        [Route("dumpplayerclaims")]
         public ActionResult<IEnumerable<string>> Get()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
