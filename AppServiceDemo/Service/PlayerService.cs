@@ -37,7 +37,7 @@ namespace AppServiceDemo.Service
 
         public string GeneratePlayerJWT(Player player)
         {
-            _logger.LogInformation("Generating JWT for player", player);
+            _logger.LogInformation($"Generating JWT for player {player.Name}");
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
