@@ -58,5 +58,29 @@ namespace AppServiceDemo.Data.Repository.Abstraction
             await _context.SaveChangesAsync();
             return entity;
         }
+
+        public async Task ExecuteInTransaction(Func<Task> action)
+        {
+            // execution strategy required to fix error around transactions + exec strategy we're using at startup
+            var executionStrategy = _context.Database.CreateExecutionStrategy();
+
+            await executionStrategy.Execute(async () =>
+            {
+                using (var dbContextTransaction = _context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        await action.Invoke();
+                        dbContextTransaction.Commit();
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogError("An error occured committing a transaction to multiple tables.", e);
+                        dbContextTransaction.Rollback();
+                        throw;
+                    }
+                }
+            });            
+        }
     }
 }

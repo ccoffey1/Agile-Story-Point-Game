@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AppServiceDemo.Data.Contracts
 {
-    public class UserDto
+    public class PlayerDto
     {
         public Guid Id { get; set; }
         [Required]

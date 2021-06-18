@@ -9,14 +9,14 @@ namespace AppServiceDemo.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class PlayerController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IPlayerService _playerService;
         private readonly IGameSessionService _gameSessionService;
 
-        public UserController(IUserService authenticationService, IGameSessionService gameSessionService)
+        public PlayerController(IPlayerService authenticationService, IGameSessionService gameSessionService)
         {
-            _userService = authenticationService;
+            _playerService = authenticationService;
             _gameSessionService = gameSessionService;
         }
 
@@ -26,9 +26,9 @@ namespace AppServiceDemo.Controllers
         public async Task<IActionResult> GetOwnedGame()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
-            Guid userId = Guid.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
+            Guid playerId = Guid.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            var gameSession = await _gameSessionService.GetByOwnerIdAsync(userId);
+            var gameSession = await _gameSessionService.GetByOwnerIdAsync(playerId);
 
             if (gameSession == null) 
                 return NotFound();

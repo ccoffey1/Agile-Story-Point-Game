@@ -12,45 +12,49 @@ using System.Threading.Tasks;
 
 namespace AppServiceDemo.Service
 {
-    public interface IUserService
+    public interface IPlayerService
     {
-       string GenerateUserJWT(UserDto userDto);
-       Task<UserDto> GetAsync(Guid id);
+       string GeneratePlayerJWT(PlayerDto playerDto);
+       Task<PlayerDto> GetAsync(Guid id);
     }
 
-    public class UserService : IUserService
+    public class PlayerService : IPlayerService
     {
-        private readonly ILogger<UserService> _logger;
+        private readonly ILogger<PlayerService> _logger;
         private readonly IConfiguration _config;
-        private readonly IPlayerRepository _userRepository;
+        private readonly IPlayerRepository _playerRepository;
         private readonly IGameSessionRepository _gameSessionRepository;
 
-        public UserService(
-            ILogger<UserService> logger,
+        public PlayerService(
+            ILogger<PlayerService> logger,
             IConfiguration config,
-            IPlayerRepository userRepository, 
+            IPlayerRepository playerRepository, 
             IGameSessionRepository gameSessionRepository)
         {
             _logger = logger;
             _config = config;
-            _userRepository = userRepository;
+            _playerRepository = playerRepository;
             _gameSessionRepository = gameSessionRepository;
         }
 
-        public async Task<UserDto> GetAsync(Guid id)
+        public async Task<PlayerDto> GetAsync(Guid id)
         {
-            var user = await _userRepository.GetAsync(id);
+            _logger.LogInformation($"Fetching player by id {id}");
 
-            return new UserDto()
+            var player = await _playerRepository.GetAsync(id);
+
+            return new PlayerDto()
             {
-                Id = user.Id,
-                PlayerName = user.PlayerName,
-                GameSessionId = user.GameSessionId
+                Id = player.Id,
+                PlayerName = player.Name,
+                GameSessionId = player.GameSessionId
             };
         }
 
-        public string GenerateUserJWT(UserDto userDto)
+        public string GeneratePlayerJWT(PlayerDto playerDto)
         {
+            _logger.LogInformation("Generating JWT for player", playerDto);
+
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
@@ -59,8 +63,8 @@ namespace AppServiceDemo.Service
                 _config["Jwt:Issuer"],
                 claims: new List<Claim>
                 {
-                    new Claim(ClaimTypes.NameIdentifier, userDto.Id.ToString()),
-                    new Claim(ClaimTypes.Name, userDto.PlayerName)
+                    new Claim(ClaimTypes.NameIdentifier, playerDto.Id.ToString()),
+                    new Claim(ClaimTypes.Name, playerDto.PlayerName)
                     // TODO: Role?
                 },
                 signingCredentials: credentials);

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AppServiceDemo.Data.Entities
 {
-    public class User
+    public class Player
     {
         [Key]
         public Guid Id { get; set; }
@@ -13,7 +13,7 @@ namespace AppServiceDemo.Data.Entities
 
         [Required]
         [StringLength(60, MinimumLength = 3)]
-        public string PlayerName { get; set; }
+        public string Name { get; set; }
         public DateTime CreatedAt { get; set; }
         public GameSession GameSession { get; set; }
     }

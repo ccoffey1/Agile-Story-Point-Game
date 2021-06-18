@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace AppServiceDemo.Data.Repository
 {
-    public interface IPlayerRepository : IRepository<User>
+    public interface IPlayerRepository : IRepository<Player>
     {
-        Task<User> GetByPlayerNameAsync(string playerName);
+        Task<Player> GetByPlayerNameAsync(string playerName);
     }
 
-    public class PlayerRepository : CosmosRepository<User, CosmosDbContext>, IPlayerRepository
+    public class PlayerRepository : CosmosRepository<Player, CosmosDbContext>, IPlayerRepository
     {
         public PlayerRepository(
             CosmosDbContext context, 
             ILogger<PlayerRepository> logger) : base(context, logger)
         { }
 
-        public async Task<User> GetByPlayerNameAsync(string playerName)
+        public async Task<Player> GetByPlayerNameAsync(string playerName)
         {
-            return await _context.Users.FirstOrDefaultAsync(x => x.PlayerName == playerName);
+            return await _context.Players.FirstOrDefaultAsync(x => x.Name == playerName);
         }
     }
 }

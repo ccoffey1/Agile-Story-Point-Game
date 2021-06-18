@@ -9,11 +9,11 @@ namespace AppServiceDemo.Data.Entities
         public Guid Id { get; set; }
 
         [Required]
-        public Guid OwnerUserId { get; set; }
+        public Guid OwnerPlayerId { get; set; }
 
         [Required]
         [StringLength(30, MinimumLength = 3)]
         public string TeamName { get; set; }
-        public User Owner { get; set;  }
+        public Player Owner { get; set;  }
     }
 }

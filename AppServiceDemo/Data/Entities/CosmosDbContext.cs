@@ -6,7 +6,7 @@ namespace AppServiceDemo.Data.Entities
 {
     public class CosmosDbContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
+        public DbSet<Player> Players { get; set; }
         public DbSet<GameSession> GameSessions { get; set; }
 
         public CosmosDbContext(DbContextOptions options) : base(options)
@@ -21,7 +21,7 @@ namespace AppServiceDemo.Data.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasOne(x => x.GameSession);
+            modelBuilder.Entity<Player>().HasOne(x => x.GameSession);
             modelBuilder.Entity<GameSession>().HasOne(x => x.Owner);
 
             // using reflection to dynamically create collections in cosmos for each dbset in this class

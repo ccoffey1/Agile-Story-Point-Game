@@ -9,7 +9,7 @@ namespace AppServiceDemo.Data.Repository
 {
     public interface IGameSessionRepository : IRepository<GameSession>
     {
-        Task<GameSession> GetByOwnerIdAsync(Guid userId);
+        Task<GameSession> GetByOwnerIdAsync(Guid playerId);
     }
 
     public class GameSessionRepository : CosmosRepository<GameSession, CosmosDbContext>, IGameSessionRepository
@@ -19,9 +19,9 @@ namespace AppServiceDemo.Data.Repository
             ILogger<GameSessionRepository> logger) : base(context, logger)
         { }
 
-        public async Task<GameSession> GetByOwnerIdAsync(Guid userId)
+        public async Task<GameSession> GetByOwnerIdAsync(Guid playerId)
         {
-            return await _context.GameSessions.FirstOrDefaultAsync(x => x.OwnerUserId == userId);
+            return await _context.GameSessions.FirstOrDefaultAsync(x => x.OwnerPlayerId == playerId);
         }
     }
 }

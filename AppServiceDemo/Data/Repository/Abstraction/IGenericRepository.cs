@@ -6,6 +6,7 @@ namespace AppServiceDemo.Data.Repository
 {
     public interface IRepository<T> where T : class
     {
+        Task ExecuteInTransaction(Func<Task> action);
         Task<List<T>> GetAllAsync();
         Task<T> GetAsync(Guid id);
         Task<T> AddAsync(T entity);
