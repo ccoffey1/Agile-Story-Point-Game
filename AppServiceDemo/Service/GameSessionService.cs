@@ -18,14 +18,14 @@ namespace AppServiceDemo.Service
     {
         private readonly ILogger<GameSessionService> _logger;
         private readonly IConfiguration _config;
-        private readonly IUserRepository _userRepository;
+        private readonly IPlayerRepository _userRepository;
         private readonly IGameSessionRepository _gameSessionRepository;
         private readonly IUserService _userService;
 
         public GameSessionService(
             ILogger<GameSessionService> logger,
             IConfiguration config,
-            IUserRepository userRepository,
+            IPlayerRepository userRepository,
             IUserService userService, 
             IGameSessionRepository gameSessionRepository)
         {

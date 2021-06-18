@@ -13,7 +13,7 @@ namespace AppServiceDemo.Controllers
         public GameController(
             ILogger<GameController> logger,
             IGameSessionService gameSessionService, 
-            IUserRepository userRepository)
+            IPlayerRepository userRepository)
         {
             _gameSessionService = gameSessionService;
         }

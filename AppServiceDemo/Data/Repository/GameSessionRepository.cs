@@ -1,6 +1,7 @@
 ﻿using AppServiceDemo.Data.Entities;
 using AppServiceDemo.Data.Repository.Abstraction;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
@@ -13,7 +14,9 @@ namespace AppServiceDemo.Data.Repository
 
     public class GameSessionRepository : CosmosRepository<GameSession, CosmosDbContext>, IGameSessionRepository
     {
-        public GameSessionRepository(CosmosDbContext context) : base(context)
+        public GameSessionRepository(
+            CosmosDbContext context, 
+            ILogger<GameSessionRepository> logger) : base(context, logger)
         { }
 
         public async Task<GameSession> GetByOwnerIdAsync(Guid userId)

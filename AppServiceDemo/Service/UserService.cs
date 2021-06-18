@@ -22,13 +22,13 @@ namespace AppServiceDemo.Service
     {
         private readonly ILogger<UserService> _logger;
         private readonly IConfiguration _config;
-        private readonly IUserRepository _userRepository;
+        private readonly IPlayerRepository _userRepository;
         private readonly IGameSessionRepository _gameSessionRepository;
 
         public UserService(
             ILogger<UserService> logger,
             IConfiguration config,
-            IUserRepository userRepository, 
+            IPlayerRepository userRepository, 
             IGameSessionRepository gameSessionRepository)
         {
             _logger = logger;

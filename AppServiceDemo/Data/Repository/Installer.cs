@@ -16,7 +16,7 @@ namespace AppServiceDemo.Data.Repository
                 databaseName: "PlanningPokerDB"));
 
             #region Repositories
-            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IPlayerRepository, PlayerRepository>();
             services.AddTransient<IGameSessionRepository, GameSessionRepository>();
             #endregion
 

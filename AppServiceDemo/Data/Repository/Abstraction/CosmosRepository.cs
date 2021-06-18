@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,10 +11,14 @@ namespace AppServiceDemo.Data.Repository.Abstraction
         where TContext : DbContext
     {
         internal readonly TContext _context;
+        internal readonly ILogger _logger;
 
-        public CosmosRepository(TContext context)
+        public CosmosRepository(
+            TContext context,
+            ILogger logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<TEntity> AddAsync(TEntity entity)
