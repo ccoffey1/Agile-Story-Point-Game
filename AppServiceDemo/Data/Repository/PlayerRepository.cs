@@ -11,10 +11,10 @@ namespace AppServiceDemo.Data.Repository
         Task<Player> GetByPlayerNameAsync(string playerName);
     }
 
-    public class PlayerRepository : CosmosRepository<Player, CosmosDbContext>, IPlayerRepository
+    public class PlayerRepository : BaseRepository<Player, ApplicationContext>, IPlayerRepository
     {
         public PlayerRepository(
-            CosmosDbContext context, 
+            ApplicationContext context, 
             ILogger<PlayerRepository> logger) : base(context, logger)
         { }
 

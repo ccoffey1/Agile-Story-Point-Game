@@ -4,6 +4,7 @@ using AppServiceDemo.Data.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AppServiceDemo.Service
@@ -11,7 +12,6 @@ namespace AppServiceDemo.Service
     public interface IGameSessionService
     {
         Task<string> CreateGameAsync(string playerName, string teamName);
-        Task<GameSession> GetByOwnerIdAsync(Guid playerId);
     }
 
     public class GameSessionService : IGameSessionService
@@ -47,21 +47,17 @@ namespace AppServiceDemo.Service
 
             await _gameSessionRepository.ExecuteInTransaction(async () =>
             {
+                player = new Player
+                {
+                    Name = playerName
+                };
+
                 // create game and player
                 var gameSession = await _gameSessionRepository.AddAsync(new GameSession()
                 {
-                    TeamName = teamName
+                    TeamName = teamName,
+                    Players = new List<Player>() { player }
                 });
-
-                player = await _playerRepository.AddAsync(new Player
-                {
-                    Name = playerName,
-                    GameSessionId = gameSession.Id
-                });
-
-                // link player to game
-                gameSession.OwnerPlayerId = player.Id;
-                await _gameSessionRepository.UpdateAsync(gameSession);
             });
 
             return _playerService.GeneratePlayerJWT(new PlayerDto
@@ -70,11 +66,6 @@ namespace AppServiceDemo.Service
                 PlayerName = player.Name,
                 GameSessionId = player.GameSessionId
             });
-        }
-
-        public async Task<GameSession> GetByOwnerIdAsync(Guid playerId)
-        {
-            return await _gameSessionRepository.GetByOwnerIdAsync(playerId);
         }
     }
 }

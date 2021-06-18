@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace AppServiceDemo.Data.Repository.Abstraction
 {
-    public class CosmosRepository<TEntity, TContext> : IRepository<TEntity>
+    public class BaseRepository<TEntity, TContext> : IRepository<TEntity>
         where TEntity : class
         where TContext : DbContext
     {
         internal readonly TContext _context;
         internal readonly ILogger _logger;
 
-        public CosmosRepository(
+        public BaseRepository(
             TContext context,
             ILogger logger)
         {
@@ -42,7 +42,7 @@ namespace AppServiceDemo.Data.Repository.Abstraction
             return entity;
         }
 
-        public async Task<TEntity> GetAsync(Guid id)
+        public async Task<TEntity> GetAsync(int id)
         {
             return await _context.Set<TEntity>().FindAsync(id);
         }

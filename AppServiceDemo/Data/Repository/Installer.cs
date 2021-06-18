@@ -9,11 +9,13 @@ namespace AppServiceDemo.Data.Repository
     {
         public static IServiceCollection AddContextAndRepositories(this IServiceCollection services, IConfiguration configuration)
         {
-            // Cosmos DB
-            services.AddDbContext<CosmosDbContext>(options => options.UseCosmos(
-                configuration.GetValue<string>("Cosmos:EndpointUri"),
-                configuration.GetValue<string>("Cosmos:PrimaryKey"),
-                databaseName: "PlanningPokerDB"));
+            services.AddDbContext<ApplicationContext>(config =>
+            {
+                config.UseSqlServer(configuration.GetConnectionString("MsSqlConnStr"), options =>
+                {
+                    options.EnableRetryOnFailure();
+                });
+            }, ServiceLifetime.Transient);
 
             #region Repositories
             services.AddTransient<IPlayerRepository, PlayerRepository>();

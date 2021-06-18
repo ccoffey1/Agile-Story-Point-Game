@@ -8,7 +8,7 @@ namespace AppServiceDemo.Data.Repository
     {
         Task ExecuteInTransaction(Func<Task> action);
         Task<List<T>> GetAllAsync();
-        Task<T> GetAsync(Guid id);
+        Task<T> GetAsync(int id);
         Task<T> AddAsync(T entity);
         Task<T> UpdateAsync(T entity);
         Task<T> DeleteAsync(int id);

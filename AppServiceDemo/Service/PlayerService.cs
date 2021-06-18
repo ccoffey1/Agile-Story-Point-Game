@@ -15,7 +15,7 @@ namespace AppServiceDemo.Service
     public interface IPlayerService
     {
        string GeneratePlayerJWT(PlayerDto playerDto);
-       Task<PlayerDto> GetAsync(Guid id);
+       Task<PlayerDto> GetAsync(int id);
     }
 
     public class PlayerService : IPlayerService
@@ -37,7 +37,7 @@ namespace AppServiceDemo.Service
             _gameSessionRepository = gameSessionRepository;
         }
 
-        public async Task<PlayerDto> GetAsync(Guid id)
+        public async Task<PlayerDto> GetAsync(int id)
         {
             _logger.LogInformation($"Fetching player by id {id}");
 
