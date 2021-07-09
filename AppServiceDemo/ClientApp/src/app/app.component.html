@@ -1,6 +1,42 @@
-<body>
-  <app-nav-menu></app-nav-menu>
-  <div class="container">
-    <router-outlet></router-outlet>
+<h1>Super Planning Poker</h1>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Modal title</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-</body>
+  <div class="modal-body">
+    <p>One fine body&hellip;</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+<div id="join-create-container">
+  <div class="control-container d-flex flex-column justify-content-center">
+    <div class="margin-children d-flex flex-column justify-content-center align-items-center">
+      <input class="textbox" 
+             type="text" 
+             name="join-code" 
+             placeholder="Join Code" 
+             onfocus="this.placeholder = ''"
+             onblur="this.placeholder = 'Join Code'">
+      <input class="inner btn btn-lg btn-success" type="button" value="Join Team" (click)="openBackDropCustomClass(content)">
+    </div>
+    
+    <div class="spacer"></div>
+
+    <div class="margin-children d-flex flex-column justify-content-center align-items-center">
+      <input class="textbox" 
+             type="text" 
+             name="team-name" 
+             placeholder="Team Name" 
+             onfocus="this.placeholder = ''"
+             onblur="this.placeholder = 'Team Name'">      
+      <input class="inner btn btn-lg btn-primary" type="button" value="Create Team">
+    </div>
+  </div>
+</div>
