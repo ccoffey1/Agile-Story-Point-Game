@@ -1,11 +1,11 @@
 on:
   push:
     branches:
-      - main
+      - feature/#18_DB_Setup
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
-      - main
+      - feature/#18_DB_Setup
 
 env:
   AZURE_WEBAPP_NAME: coffey-appservice-test
@@ -35,11 +35,11 @@ jobs:
         run: dotnet test --no-restore --verbosity normal
 
       - name: Publish
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/feature/#18_DB_Setup'
         run: dotnet publish --configuration Release --output 'dotnetcorewebapp'
 
       - name: 'Deploy to Azure App Services 😎'
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/feature/#18_DB_Setup'
         uses: 'azure/webapps-deploy@v2'
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
