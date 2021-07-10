@@ -1,11 +1,11 @@
 on:
   push:
     branches:
-      - main
+      - feature/main
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
-      - main
+      - feature/main
 
 env:
   AZURE_WEBAPP_NAME: coffey-appservice-test
@@ -34,12 +34,23 @@ jobs:
       - name: Test
         run: dotnet test --no-restore --verbosity normal
 
+      - name: App Settings Variable Substitution
+        uses: cschleiden/replace-tokens@v1
+        with:
+          tokenPrefix: '#{'
+          tokenSuffix: '}#'
+          files: '["**/*.json"]'
+        env:
+          PrimaryDBConnectionString: ${{ secrets.DB_CONNECTION_STRING }}
+          JwtKey: ${{ secrets.JWT_KEY }}
+          JwtIssuer: https://coffey-appservice-test.azurewebsites.net/
+
       - name: Publish
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/feature/main'
         run: dotnet publish --configuration Release --output 'dotnetcorewebapp'
 
       - name: 'Deploy to Azure App Services 😎'
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/feature/main'
         uses: 'azure/webapps-deploy@v2'
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
