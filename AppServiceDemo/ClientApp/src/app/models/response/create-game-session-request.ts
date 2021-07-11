@@ -1,4 +1,4 @@
 export interface CreateGameSessionResponse {
-  playerJWT: string,
-  gameJoinCode: string,
+  playerJWT: string
+  gameJoinCode: string
 }

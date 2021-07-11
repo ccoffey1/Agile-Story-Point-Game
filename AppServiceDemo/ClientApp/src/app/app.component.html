@@ -20,20 +20,24 @@
     </div>
 
      <!-- Join Game Session -->
-     <div *ngIf="showJoinGameSession">
+     <form *ngIf="showJoinGameSession" [formGroup]="joinSessionForm" (ngSubmit)="joinGameSession()">
       <div class="margin-children d-flex flex-column justify-content-center align-items-center">
         <input class="textbox" 
                type="text" 
                name="player-name" 
                placeholder="Player Name" 
+               formControlName="playerName"
                onfocus="this.placeholder = ''"
-               onblur="this.placeholder = 'Player Name'">
+               onblur="this.placeholder = 'Player Name'"
+               required>
         <input class="textbox" 
-              type="text" 
-              name="join-code" 
-              placeholder="Join Code" 
-              onfocus="this.placeholder = ''"
-              onblur="this.placeholder = 'Join Code'">
+               type="text" 
+               name="join-code" 
+               placeholder="Join Code" 
+               formControlName="joinCode"
+               onfocus="this.placeholder = ''"
+               onblur="this.placeholder = 'Join Code'"
+               required>
       </div>
       
       <div class="margin-children d-flex flex-row justify-content-center align-items-center">
@@ -41,10 +45,11 @@
                 type="button" 
                 (click)="backClicked()">Back</button>
         <button class="btn btn-lg btn-success" 
-                type="button" 
-                (click)="joinGameSessionClicked()">Join Game Session</button>
+                type="submit" 
+                [disabled]="!joinSessionForm.valid">Join Game Session</button>
+
       </div>
-    </div>
+    </form>
 
     <!-- Create GameSession -->
     <form *ngIf="showCreateGameSession" [formGroup]="gameSessionForm" (ngSubmit)="createGameSession()">

@@ -19,6 +19,11 @@ export class AppComponent {
     gameSessionName: new FormControl('')
   })
 
+  joinSessionForm = new FormGroup({
+    playerName: new FormControl(''),
+    joinCode: new FormControl('')
+  })
+
   constructor(
     private modalService: NgbModal, 
     private gameSessionService: GameSessionService) {}
@@ -47,5 +52,11 @@ export class AppComponent {
     this.gameSessionService
       .createGameSession(this.gameSessionForm.value)
       .subscribe(gameSessionResponse => console.log(gameSessionResponse))
+  }
+
+  joinGameSession() {
+    this.gameSessionService
+      .joinGameSession(this.joinSessionForm.value)
+      .subscribe(joinSessionResponse => console.log(joinSessionResponse))
   }
 }

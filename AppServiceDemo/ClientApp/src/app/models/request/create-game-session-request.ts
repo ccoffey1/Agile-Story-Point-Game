@@ -1,4 +1,4 @@
 export interface CreateGameSessionRequest {
-  playerName: string,
+  playerName: string
   gameSessionName: string
 }

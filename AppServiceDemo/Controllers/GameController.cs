@@ -30,10 +30,10 @@ namespace AppServiceDemo.Controllers
         }
 
         [HttpPost("join")]
-        public async Task<IActionResult> Join(string playerName, string joinCode)
+        public async Task<IActionResult> Join([FromBody]JoinGameSessionRequest request)
         {
-            _logger.LogInformation($"Received request to create player {playerName} and join game with code {joinCode}");
-            string playerJwt = await _gameSessionService.JoinNewPlayerToGameAsync(playerName, joinCode);
+            _logger.LogInformation($"Received request to create player {request.PlayerName} and join game with code {request.JoinCode}");
+            string playerJwt = await _gameSessionService.JoinNewPlayerToGameAsync(request.PlayerName, request.JoinCode);
             return Ok(playerJwt);
         }
     }

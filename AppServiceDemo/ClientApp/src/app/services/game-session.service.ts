@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { CreateGameSessionResponse } from '../models/response/create-game-session-request'
 import { CreateGameSessionRequest } from '../models/request/create-game-session-request';
+import { JoinGameSessionRequest } from '../models/request/join-game-session-request';
+import { JoinGameSessionResponse } from '../models/response/join-game-session-response';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +19,16 @@ export class GameSessionService {
   /** POST: adds a new game session to the database and gets a JWT for the user */
   createGameSession(request: CreateGameSessionRequest): Observable<CreateGameSessionResponse> {
     return this.http.post<CreateGameSessionResponse>(`${this.gameUrl}/create`, request).pipe(
+      tap(
+        res => this.setSession(res.playerJWT),
+        err => console.error(err)
+      )
+    )
+  }
+
+  /** POST: joins an existing game session and gets a JWT for the user */
+  joinGameSession(request: JoinGameSessionRequest): Observable<JoinGameSessionResponse> {
+    return this.http.post<JoinGameSessionResponse>(`${this.gameUrl}/join`, request).pipe(
       tap(
         res => this.setSession(res.playerJWT),
         err => console.error(err)
