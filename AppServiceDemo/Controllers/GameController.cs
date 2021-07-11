@@ -1,10 +1,13 @@
-﻿using AppServiceDemo.Service;
+﻿using AppServiceDemo.Data.Contracts.Request;
+using AppServiceDemo.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace AppServiceDemo.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class GameController : ControllerBase
     {
         private readonly ILogger<GameController> _logger;
@@ -19,10 +22,10 @@ namespace AppServiceDemo.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Create(string playerName, string gameSessionName)
+        public async Task<IActionResult> Create([FromBody]CreateGameSessionRequest request)
         {
-            _logger.LogInformation($"Received request to create player {playerName} and game {gameSessionName}");
-            var newGameResponse = await _gameSessionService.CreateGameAsync(playerName, gameSessionName);
+            _logger.LogInformation($"Received request to create player {request.PlayerName} and game {request.GameSessionName}");
+            var newGameResponse = await _gameSessionService.CreateGameAsync(request.PlayerName, request.GameSessionName);
             return Ok(newGameResponse);
         }
 

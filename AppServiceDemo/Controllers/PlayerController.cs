@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AppServiceDemo.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PlayerController : ControllerBase
     {
