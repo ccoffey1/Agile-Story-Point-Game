@@ -1,4 +1,4 @@
-﻿using AppServiceDemo.Data.Contracts;
+﻿using AppServiceDemo.Data.Contracts.Response;
 using AppServiceDemo.Data.Entities;
 using AppServiceDemo.Data.Repository;
 using Microsoft.Extensions.Configuration;
@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace AppServiceDemo.Service
 {
-    public interface IGameSessionService
+	public interface IGameSessionService
     {
-        Task<NewGameResponseDto> CreateGameAsync(string playerName, string gameSessionName);
-        Task<string> JoinNewPlayerToGameAsync(string playerName, string gameSessionName);
+        Task<NewGameResponse> CreateGameAsync(string playerName, string gameSessionName);
+        Task<JoinGameResponse> JoinNewPlayerToGameAsync(string playerName, string gameSessionName);
     }
 
     public class GameSessionService : IGameSessionService
@@ -36,7 +36,7 @@ namespace AppServiceDemo.Service
             _gameSessionRepository = gameSessionRepository;
         }
 
-        public async Task<NewGameResponseDto> CreateGameAsync(string playerName, string gameSessionName)
+        public async Task<NewGameResponse> CreateGameAsync(string playerName, string gameSessionName)
         {
             _logger.LogInformation($"Attempting to create a game {gameSessionName} requested by player {playerName}");
 
@@ -52,14 +52,14 @@ namespace AppServiceDemo.Service
                 JoinCode = Guid.NewGuid().ToString() // TODO: Generate codes not using Guids
             });
 
-            return new NewGameResponseDto()
+            return new NewGameResponse()
             {
                 PlayerJWT = _playerService.GeneratePlayerJWT(player),
                 GameJoinCode = gameSession.JoinCode
             };
         }
 
-        public async Task<string> JoinNewPlayerToGameAsync(string playerName, string joinCode)
+        public async Task<JoinGameResponse> JoinNewPlayerToGameAsync(string playerName, string joinCode)
         {
             var gameSession = await _gameSessionRepository.GetByJoinCodeAsync(joinCode);
 
@@ -77,12 +77,15 @@ namespace AppServiceDemo.Service
             {
                 Name = playerName
             };
-            
+
             gameSession.Players.Add(player);
 
             await _gameSessionRepository.UpdateAsync(gameSession);
 
-            return _playerService.GeneratePlayerJWT(player);
+            return new JoinGameResponse
+            {
+                PlayerJWT = _playerService.GeneratePlayerJWT(player)
+            };
         }
     }
 }
