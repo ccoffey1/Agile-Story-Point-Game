@@ -33,8 +33,8 @@ namespace AppServiceDemo.Controllers
         public async Task<IActionResult> Join([FromBody]JoinGameSessionRequest request)
         {
             _logger.LogInformation($"Received request to create player {request.PlayerName} and join game with code {request.JoinCode}");
-            string playerJwt = await _gameSessionService.JoinNewPlayerToGameAsync(request.PlayerName, request.JoinCode);
-            return Ok(playerJwt);
+            var joinGameResponse = await _gameSessionService.JoinNewPlayerToGameAsync(request.PlayerName, request.JoinCode);
+            return Ok(joinGameResponse);
         }
     }
 }

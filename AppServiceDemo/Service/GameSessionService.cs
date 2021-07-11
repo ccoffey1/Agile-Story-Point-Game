@@ -13,7 +13,7 @@ namespace AppServiceDemo.Service
 	public interface IGameSessionService
     {
         Task<NewGameResponse> CreateGameAsync(string playerName, string gameSessionName);
-        Task<string> JoinNewPlayerToGameAsync(string playerName, string gameSessionName);
+        Task<JoinGameResponse> JoinNewPlayerToGameAsync(string playerName, string gameSessionName);
     }
 
     public class GameSessionService : IGameSessionService
@@ -59,7 +59,7 @@ namespace AppServiceDemo.Service
             };
         }
 
-        public async Task<string> JoinNewPlayerToGameAsync(string playerName, string joinCode)
+        public async Task<JoinGameResponse> JoinNewPlayerToGameAsync(string playerName, string joinCode)
         {
             var gameSession = await _gameSessionRepository.GetByJoinCodeAsync(joinCode);
 
@@ -77,12 +77,15 @@ namespace AppServiceDemo.Service
             {
                 Name = playerName
             };
-            
+
             gameSession.Players.Add(player);
 
             await _gameSessionRepository.UpdateAsync(gameSession);
 
-            return _playerService.GeneratePlayerJWT(player);
+            return new JoinGameResponse
+            {
+                PlayerJWT = _playerService.GeneratePlayerJWT(player)
+            };
         }
     }
 }
