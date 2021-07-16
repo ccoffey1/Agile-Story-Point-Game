@@ -12,13 +12,11 @@ import { JoinGameSessionResponse } from '../models/response/join-game-session-re
 })
 export class GameSessionService {
 
-  gameUrl = 'http://localhost:49581/api/game' // TODO: CONFIG
-
   constructor(private http: HttpClient) { }
 
   /** POST: adds a new game session to the database and gets a JWT for the user */
   createGameSession(request: CreateGameSessionRequest): Observable<CreateGameSessionResponse> {
-    return this.http.post<CreateGameSessionResponse>(`${this.gameUrl}/create`, request).pipe(
+    return this.http.post<CreateGameSessionResponse>(`/api/game/create`, request).pipe(
       tap(
         res => this.setSession(res.playerJWT),
         err => console.error(err)
@@ -28,7 +26,7 @@ export class GameSessionService {
 
   /** POST: joins an existing game session and gets a JWT for the user */
   joinGameSession(request: JoinGameSessionRequest): Observable<JoinGameSessionResponse> {
-    return this.http.post<JoinGameSessionResponse>(`${this.gameUrl}/join`, request).pipe(
+    return this.http.post<JoinGameSessionResponse>(`/api/game/join`, request).pipe(
       tap(
         res => this.setSession(res.playerJWT),
         err => console.error(err)
