@@ -8,10 +8,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StartGameComponent } from './start-game/start-game.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    StartGameComponent
   ],
   imports: [
     BrowserModule,
