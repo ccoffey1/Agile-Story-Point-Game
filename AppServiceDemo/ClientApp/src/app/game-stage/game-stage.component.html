@@ -14,7 +14,20 @@
 </div>
 
 <!-- Reasons -->
-<div></div>
+<div id="reasons" class="float-right d-flex flex-column justify-content-center">
+  
+  <div class="reason" *ngFor="let reason of reasons">
+    <div class="reason-container">
+      <p class="reason-title">
+        {{ reason.title }}
+      </p>
+      <p class="reason-description">
+        {{ reason.description }}
+      </p>
+    </div>
+  </div>
+
+</div>
 
 <!-- Card Selection -->
 <div></div>
