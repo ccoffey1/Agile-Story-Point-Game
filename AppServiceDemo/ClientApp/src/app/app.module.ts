@@ -9,11 +9,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StartGameComponent } from './start-game/start-game.component';
+import { GameStageComponent } from './game-stage/game-stage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    StartGameComponent
+    StartGameComponent,
+    GameStageComponent
   ],
   imports: [
     BrowserModule,
