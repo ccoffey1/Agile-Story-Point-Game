@@ -10,10 +10,13 @@ import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 })
 export class GameStageComponent implements OnInit {
 
+  // general properties
+  joinCode = '1d7279b1-80a4-4389-a775-3c142d2f12b3' // TODO: set dynamically
+
+  // popout properties
   faCopy = faCopy
   popoverCount = 1
   popoverReset: NodeJS.Timeout;
-
   popoverMessages = [
     "Copied!",
     "Double copy!",
@@ -24,9 +27,9 @@ export class GameStageComponent implements OnInit {
     "Unstoppable!",
     "Wicked sick!"
   ]
-
   popoverMessage = this.popoverMessages[0];
 
+  // reasons panel properties
   reasons = [
     { title: 'New Territory', description: "We're unfamiliar with this area.", selected: false },
     { title: 'Minimal Dev Work', description: "Won't take too long.", selected: false },
@@ -39,6 +42,10 @@ export class GameStageComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  copyJoinCode() {
+
   }
 
   popoutTriggered(popover: NgbPopover) {

@@ -9,7 +9,9 @@
       #p="ngbPopover"
       [autoClose]="false"
       (click)="popoutTriggered(p)"
-      triggers="manual">Join Code: 1d7279b1-80a4-4389-a775-3c142d2f33b3
+      [cdkCopyToClipboard]="joinCode"
+      triggers="manual">
+        Join Code: <span id="join-code-text">{{ joinCode }} </span>
       <fa-icon [icon]="faCopy"></fa-icon>
     </p>
   </div>
