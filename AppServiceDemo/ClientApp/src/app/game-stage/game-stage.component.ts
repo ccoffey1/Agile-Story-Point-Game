@@ -11,7 +11,8 @@ import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 export class GameStageComponent implements OnInit {
 
   // general properties
-  joinCode = '1d7279b1-80a4-4389-a775-3c142d2f12b3' // TODO: set dynamically
+  teamName: string;
+  joinCode: string;
 
   // popout properties
   faCopy = faCopy
@@ -42,11 +43,14 @@ export class GameStageComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    // TODO: Fetch dynamically
+    this.teamName = this.truncate('Funderdome', 30)
+    this.joinCode = '1d7279b1-80a4-4389-a775-3c142d2f12b3'
   }
 
-  copyJoinCode() {
-
-  }
+  truncate(str, n){
+    return (str.length > n) ? str.substr(0, n-1) + '…' : str;
+  };
 
   popoutTriggered(popover: NgbPopover) {
     if (popover.isOpen() === false) {
