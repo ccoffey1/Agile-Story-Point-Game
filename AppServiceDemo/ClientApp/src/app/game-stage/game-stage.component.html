@@ -5,7 +5,7 @@
     <h1 id="header">Funderdome</h1>
     <p id="team-join-code">Join Code: 1d7279b1-80a4-4389-a775-3c142d2f33b3</p>
   </div>
-  
+
   <!-- Consensus -->
   <div id="consensus">
     <h1 id="header">Consensus</h1>
@@ -15,8 +15,9 @@
 
 <!-- Reasons -->
 <div id="reasons" class="float-right d-flex flex-column justify-content-center">
-  
-  <div class="reason" *ngFor="let reason of reasons">
+
+  <div class="reason d-flex flex-row" *ngFor="let reason of reasons; let i = index">
+    <input type="checkbox" name="" id="{{i}}-check" [(ngModel)]="reason.selected" name="reason-selection">
     <div class="reason-container">
       <p class="reason-title">
         {{ reason.title }}
