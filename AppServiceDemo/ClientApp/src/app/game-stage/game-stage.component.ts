@@ -25,6 +25,6 @@ export class GameStageComponent implements OnInit {
    * (For debugging) Print out reasons array.
    */
   printReasons() {
-    console.log(this.reasons)
+    console.table(this.reasons)
   }
 }
