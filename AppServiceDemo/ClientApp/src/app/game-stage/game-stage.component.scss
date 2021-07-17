@@ -9,6 +9,7 @@
   #team-join-code {
     color: var(--main-text-color);
     text-align: center;
+    cursor: pointer;
   }
 }
 
@@ -73,3 +74,20 @@
   }
 }
 
+.godlike-shake {
+  text-shadow: 2px 2px red;
+  font-weight: bold;
+  font-size: 125%;
+
+  .popover-body {
+    animation: .1s shake infinite alternate;
+  }
+}
+
+@keyframes shake {
+  0% { transform: translateX(-3px); }
+  25% { transform: translateY(3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateY(-3px); }
+  100% { transform: translateX(-3px); }
+}
