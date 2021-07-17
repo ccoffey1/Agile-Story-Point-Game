@@ -14,7 +14,7 @@
 </div>
 
 <!-- Reasons -->
-<div id="reasons" class="float-right d-flex flex-column justify-content-center">
+<div id="reasons" class="float-right d-flex flex-column justify-content-center" (click)="printReasons()">
 
   <div class="reason d-flex flex-row" *ngFor="let reason of reasons; let i = index">
     <input type="checkbox" name="" id="{{i}}-check" [(ngModel)]="reason.selected" name="reason-selection">

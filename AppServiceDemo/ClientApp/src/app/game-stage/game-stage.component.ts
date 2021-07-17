@@ -21,4 +21,10 @@ export class GameStageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * (For debugging) Print out reasons array.
+   */
+  printReasons() {
+    console.log(this.reasons)
+  }
 }
