@@ -66,7 +66,7 @@ export class GameStageComponent implements OnInit {
       // reset a few clicks after GODLIKE
       this.popoverCount = (this.popoverCount + 1) % (this.popoverMessages.length + 5)
 
-      setTimeout(() => popover.close(), 1000)
+      setTimeout(() => popover.close(), 800)
 
       // reset popover if the user doesn't click for another second
       if (this.popoverReset) {
@@ -76,7 +76,7 @@ export class GameStageComponent implements OnInit {
         this.popoverCount = 1;
         this.popoverMessage = this.popoverMessages[0]
         popover.popoverClass = ''
-      }, 2000)
+      }, 1800)
     }
   }
 
