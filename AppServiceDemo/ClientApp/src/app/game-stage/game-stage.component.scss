@@ -2,8 +2,9 @@
   width: 400px;
   height: 97px;
   background-color: var(--main-bg-color);
-  border: 1px solid var(--main-border-color);
-  border-radius: 0 0 40px 0;
+  border-width: 0 1px 1px 0;
+  border-color: var(--main-border-color);
+  border-style: solid;  border-radius: 0 0 40px 0;
 
   #team-join-code {
     color: var(--main-text-color);
@@ -13,7 +14,9 @@
 
 #consensus {
   background-color: var(--main-bg-color);
-  border: 1px solid var(--main-border-color);
+  border-width: 0 0 1px 1px;
+  border-color: var(--main-border-color);
+  border-style: solid;
   height: 250px;
   width: 350px;
   border-radius: 0 0 0 40px;
@@ -30,12 +33,14 @@
   color: var(--main-text-color);
   margin-top: 15px;
   text-align: center;
-  font-size: 3em;  
+  font-size: 3em;
 }
 
 #reasons {
   background: var(--main-bg-color);
-  border: 1px solid var(--main-border-color);
+  border-width: 1px 0 1px 1px;
+  border-color: var(--main-border-color);
+  border-style: solid;
   border-radius: 40px 0 0 40px;
   height: 500px;
   width: 350px;
@@ -53,7 +58,7 @@
       color: var(--main-text-color);
       font-size: 2em;
     }
-    
+
     .reason-description {
       color: #C9D1D9;
       opacity: 0.5;
