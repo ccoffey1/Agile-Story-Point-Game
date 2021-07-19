@@ -84,6 +84,19 @@
   color: pink;
 }
 
+#cards {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 70%;
+  height: 250px;
+  bottom: 0;
+  z-index: -1;
+  background-color: white;
+
+}
+
 /* Easter Egg Stuff */
 .godlike-shake {
   text-shadow: 2px 2px red;

@@ -40,6 +40,9 @@ export class GameStageComponent implements OnInit {
     { title: '¯\\_(ツ)_/¯', description: "I have no idea.", selected: false }
   ]
 
+  // point-selection card properties
+  pointOptions = [ 3, 5, 8, 13, 21, 32 ]
+
   constructor() { }
 
   ngOnInit(): void {
