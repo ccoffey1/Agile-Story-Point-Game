@@ -1,0 +1,50 @@
+
+<div class="d-flex justify-content-between">
+  <!-- Team Banner -->
+  <div id="team-banner">
+    <h1 id="header">{{ teamName }}</h1>
+    <p id="team-join-code"
+      [ngbPopover]="popoverMessage"
+      placement="bottom"
+      #p="ngbPopover"
+      [autoClose]="false"
+      (click)="popoutTriggered(p)"
+      [cdkCopyToClipboard]="joinCode"
+      triggers="manual">
+        Join Code: <span id="join-code-text">{{ joinCode }} </span>
+      <fa-icon [icon]="faCopy"></fa-icon>
+    </p>
+  </div>
+
+  <!-- Consensus -->
+  <div id="consensus">
+    <h1 id="header">Consensus</h1>
+    <p id="consensus-points">?</p>
+  </div>
+</div>
+
+<!-- Reasons -->
+<div id="reasons" class="float-right d-flex flex-column justify-content-center">
+
+  <div class="reason d-flex flex-row" *ngFor="let reason of reasons; let i = index">
+    <input type="checkbox" name="" id="{{i}}-check" [(ngModel)]="reason.selected" name="reason-selection" (change)="printReasons()">
+    <div class="reason-container">
+      <p class="reason-title">
+        {{ reason.title }}
+      </p>
+      <p class="reason-description">
+        {{ reason.description }}
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<!-- Card Selection -->
+<div id="cards-container">
+
+  <div class="card" *ngFor="let points of pointOptions">
+    <div class="card-points">{{ points }}</div>
+  </div>
+
+</div>

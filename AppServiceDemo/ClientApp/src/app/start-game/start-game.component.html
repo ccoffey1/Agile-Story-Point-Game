@@ -1,0 +1,86 @@
+<h1 style="margin: 20px; position: absolute;">Super Planning Poker</h1>
+
+<div id="join-create-container">
+  <div class="control-container d-flex flex-column justify-content-center align-items-center">
+    
+    <div *ngIf="showMainMenu">
+      <div class="margin-children d-flex flex-column justify-content-center align-items-center">
+        <input class="btn btn-lg btn-success" 
+               type="button" 
+               value="Join Game Session"
+               (click)="joinGameSessionClicked()">
+      </div>
+      
+      <div class="margin-children d-flex flex-column justify-content-center align-items-center">
+        <input class="btn btn-lg btn-primary" 
+              type="button" 
+              value="Create Game Session"
+              (click)="createGameSessionClicked()">
+      </div>
+    </div>
+
+     <!-- Join Game Session -->
+     <form *ngIf="showJoinGameSession" [formGroup]="joinSessionForm" (ngSubmit)="joinGameSession()">
+      <div class="margin-children d-flex flex-column justify-content-center align-items-center">
+        <input class="textbox" 
+               type="text" 
+               name="player-name" 
+               placeholder="Player Name" 
+               formControlName="playerName"
+               onfocus="this.placeholder = ''"
+               onblur="this.placeholder = 'Player Name'"
+               required>
+        <input class="textbox" 
+               type="text" 
+               name="join-code" 
+               placeholder="Join Code" 
+               formControlName="joinCode"
+               onfocus="this.placeholder = ''"
+               onblur="this.placeholder = 'Join Code'"
+               required>
+      </div>
+      
+      <div class="margin-children d-flex flex-row justify-content-center align-items-center">
+        <button class="btn btn-lg btn-secondary" 
+                type="button" 
+                (click)="backClicked()">Back</button>
+        <button class="btn btn-lg btn-success" 
+                type="submit" 
+                [disabled]="!joinSessionForm.valid">Join Game Session</button>
+
+      </div>
+    </form>
+
+    <!-- Create GameSession -->
+    <form *ngIf="showCreateGameSession" [formGroup]="gameSessionForm" (ngSubmit)="createGameSession()">
+      <div class="margin-children d-flex flex-column justify-content-center align-items-center">          
+        <input class="textbox" 
+               type="text" 
+               name="player-name" 
+               placeholder="Player Name"
+               formControlName="playerName"
+               onfocus="this.placeholder = ''"
+               onblur="this.placeholder = 'Player Name'"
+               required>
+        <input class="textbox" 
+               type="text" 
+               name="game-session-name" 
+               placeholder="Game Session Name"
+               formControlName="gameSessionName"
+               onfocus="this.placeholder = ''"
+               onblur="this.placeholder = 'Game Session Name'"
+               required>
+      </div>
+      
+      <div class="margin-children d-flex flex-row justify-content-center align-items-center">
+        <button class="btn btn-lg btn-secondary" 
+                type="button" 
+                (click)="backClicked()">Back</button>
+        <button class="btn btn-lg btn-primary" 
+                type="submit"
+                [disabled]="!gameSessionForm.valid">Create Game Session</button>
+      </div>
+    </form>
+        
+  </div>
+</div>

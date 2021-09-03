@@ -1,0 +1,77 @@
+#team-banner {
+  width: 400px;
+  height: 97px;
+  background-color: var(--main-bg-color);
+  border-width: 0 1px 1px 0;
+  border-color: var(--main-border-color);
+  border-style: solid;
+  border-radius: 0 0 40px 0;
+}
+
+#team-banner #team-join-code {
+  color: var(--main-text-color);
+  text-align: center;
+}
+
+#consensus {
+  background-color: var(--main-bg-color);
+  border-width: 0 0 1px 1px;
+  border-color: var(--main-border-color);
+  border-style: solid;
+  height: 250px;
+  width: 350px;
+  border-radius: 0 0 0 40px;
+}
+
+#consensus #consensus-points {
+  color: var(--main-text-color);
+  font-size: 10em;
+  text-align: center;
+  line-height: 155px;
+}
+
+#header {
+  color: var(--main-text-color);
+  margin-top: 15px;
+  text-align: center;
+  font-size: 3em;
+}
+
+#reasons {
+  background: var(--main-bg-color);
+  border-width: 1px 0 1px 1px;
+  border-color: var(--main-border-color);
+  border-style: solid;
+  border-radius: 40px 0 0 40px;
+  height: 550px;
+  width: 350px;
+  margin-top: 40px;
+}
+
+#reasons {
+  padding: 35px 0 35px 35px;
+}
+
+#reasons .reason {
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+#reasons .reason input[type=checkbox] {
+  -webkit-transform: scale(2);
+          transform: scale(2);
+  margin-right: 20px;
+}
+
+#reasons .reason .reason-title {
+  color: var(--main-text-color);
+  font-size: 2em;
+}
+
+#reasons .reason .reason-description {
+  color: #C9D1D9;
+  opacity: 0.5;
+  font-style: italic;
+  font-size: 1em;
+}
+/*# sourceMappingURL=game-stage.component.css.map */

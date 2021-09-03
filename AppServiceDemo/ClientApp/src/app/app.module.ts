@@ -8,10 +8,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StartGameComponent } from './start-game/start-game.component';
+import { GameStageComponent } from './game-stage/game-stage.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ClipboardModule } from '@angular/cdk/clipboard'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    StartGameComponent,
+    GameStageComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +26,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule,
+    ClipboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

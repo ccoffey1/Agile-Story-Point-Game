@@ -1,7 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: black !important; }
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+body {
+  --main-bg-color: #161B22;
+  --main-border-color: #30363D;
+  --main-text-color: #C9D1D9;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  background-color: black !important; 
+}
