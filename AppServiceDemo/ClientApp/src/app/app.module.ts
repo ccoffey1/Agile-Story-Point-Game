@@ -11,13 +11,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { StartGameComponent } from './start-game/start-game.component';
 import { GameStageComponent } from './game-stage/game-stage.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ClipboardModule } from '@angular/cdk/clipboard'
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { UserCardsComponent } from './game-stage/user-cards/user-cards.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     StartGameComponent,
-    GameStageComponent
+    GameStageComponent,
+    UserCardsComponent
   ],
   imports: [
     BrowserModule,

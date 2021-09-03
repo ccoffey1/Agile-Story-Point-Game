@@ -125,14 +125,21 @@
   }
 }
 
-@media screen and (max-height: 950px) {
+@media screen and (max-width: 1440px) {
+  #cards-container {
+    left: 0%;
+    transform: translate(-0%);
+  }
+}
+
+@media screen and (max-width: 950px) {
   #cards-container {
     left: 10%;
     transform: translate(-10%);
   }
 }
 
-@media screen and (max-height: 950px) and (max-width: 1250px) {
+@media screen and (max-height: 1300px) and (max-width: 1800px) {
   #cards-container {
     margin-left: 0px;
 
