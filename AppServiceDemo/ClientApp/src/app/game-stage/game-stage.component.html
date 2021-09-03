@@ -41,10 +41,10 @@
 </div>
 
 <!-- Card Selection -->
-<div id="cards">
+<div id="cards-container">
 
-  <div *ngFor="let points of pointOptions">
-    {{ points }}
+  <div class="card" *ngFor="let points of pointOptions">
+    <div class="card-points">{{ points }}</div>
   </div>
 
 </div>

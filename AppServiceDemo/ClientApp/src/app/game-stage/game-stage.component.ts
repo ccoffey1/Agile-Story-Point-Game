@@ -32,12 +32,12 @@ export class GameStageComponent implements OnInit {
 
   // reasons panel properties
   reasons = [
+    { title: '¯\\_(ツ)_/¯', description: "I have no idea.", selected: false },
     { title: 'New Territory', description: "We're unfamiliar with this area.", selected: false },
     { title: 'Minimal Dev Work', description: "Won't take too long.", selected: false },
     { title: 'Medium Dev Work', description: "Quite a bit of work.", selected: false },
     { title: 'Tons of Dev Work', description: "Hopefully we'll finish by retirement.", selected: false },
-    { title: 'QA Buffer', description: "More time for QE work.", selected: false },
-    { title: '¯\\_(ツ)_/¯', description: "I have no idea.", selected: false }
+    { title: 'QA Buffer', description: "More time for QE work.", selected: false }
   ]
 
   // point-selection card properties

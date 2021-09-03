@@ -44,6 +44,7 @@
 }
 
 #reasons {
+  user-select: none;
   background: var(--main-bg-color);
   border-width: 1px 0 1px 1px;
   border-color: var(--main-border-color);
@@ -62,6 +63,7 @@
     margin-left: 10px;
 
     input[type=checkbox] {
+      cursor: pointer;
       transform: scale(2);
       margin-right: 20px;
     }
@@ -84,20 +86,73 @@
   color: pink;
 }
 
-#cards {
+#cards-container {
   position: absolute;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 70%;
   height: 250px;
   bottom: 0;
   z-index: -1;
-  background-color: white;
+  overflow: hidden;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 9999; /* force to front */
 
+  .card {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    background-color: var(--main-bg-color);
+    border-color: var(--main-border-color);
+    width: 200px;
+    margin: 0px 20px 0px 20px;
+    border-radius: 20px;
+    transition: bottom 0.1s ease-in-out;
+    bottom: -120px;
+    
+    &:hover {
+      bottom: -90px;
+    }
+    
+    .card-points {
+      color: var(--main-text-color);
+      text-align: center;
+      height: 100%;
+      margin-top: 60px;
+      font-size: 7em;
+    }
+  }
 }
 
-/* Easter Egg Stuff */
+@media screen and (max-height: 950px) {
+  #cards-container {
+    left: 10%;
+    transform: translate(-10%);
+  }
+}
+
+@media screen and (max-height: 950px) and (max-width: 1250px) {
+  #cards-container {
+    margin-left: 0px;
+
+    .card {
+      bottom: -200px;
+      margin: 0px 5px 0px 5px;
+      width: 135px;
+      &:hover {
+        bottom: -150px;
+      }
+
+      .card-points {
+        margin-top: 50px;
+        font-size: 5em;
+      }
+    }
+  }
+}
+
+/* Copy Easter Egg Stuff */
 .godlike-shake {
   text-shadow: 2px 2px red;
   font-weight: bold;
