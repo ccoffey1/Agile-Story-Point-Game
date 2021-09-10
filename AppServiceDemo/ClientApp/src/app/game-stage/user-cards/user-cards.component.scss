@@ -2,6 +2,7 @@
 
 #player-cards-container {
     position: absolute;
+    padding: 30px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -13,13 +14,20 @@
     top: 0;
 
     .user-card {
-        height: 200px;
-        width: 150px;
+        height: 190px;
+        width: 140px;
         user-select: none;
         background-color: var(--main-bg-color);
         border-color: var(--main-border-color);
         border-width: 1px;
         border-style: solid;
         border-radius: 10px;
+    }
+
+    @media screen and (min-height: 1300px) and (min-width: 2100px) {
+        .user-card {
+            height: 240px;
+            width: 180px;
+        }
     }
 }
