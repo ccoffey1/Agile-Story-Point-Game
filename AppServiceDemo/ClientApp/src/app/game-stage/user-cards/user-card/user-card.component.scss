@@ -1,0 +1,39 @@
+:host {
+    perspective: 300px;
+}
+
+.user-card {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    height: 190px;
+    width: 140px;
+    user-select: none;
+    background-color: var(--main-bg-color);
+    border-color: var(--main-border-color);
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 10px;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transition: transform 0.5s ease-in-out;
+
+    &:hover {
+        transform: rotateY(180deg);
+    }
+
+    .initials-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 80px;
+        width: 80px;
+        background-color: var(--main-text-color);
+        border-radius: 50%;
+
+        .initials {
+            font-size: 3em;
+        }
+    }
+}

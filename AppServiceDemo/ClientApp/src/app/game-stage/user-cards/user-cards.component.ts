@@ -8,23 +8,23 @@ import { Component, OnInit } from '@angular/core';
 export class UserCardsComponent implements OnInit {
 
   users = [{
-    name: "hello"
+    name: "CC"
   },{
-    name: "hello"
+    name: "BG"
   },{
-    name: "hello"
+    name: "RE"
   },{
-    name: "hello"
+    name: "DD"
   },{
-    name: "hello"
+    name: "MJ"
   },{
-    name: "hello"
+    name: "JT"
   },{
-    name: "hello"
+    name: "ML"
   },{
-    name: "hello"
+    name: "JG"
   },{
-    name: "hello"
+    name: "RG"
   }]
 
   constructor() { }

@@ -1,6 +1,6 @@
-
 <div id="player-cards-container">
-    <div class="user-card" *ngFor="let user of users">
-        {{ user.name }}
-    </div>
+    
+    <app-user-card *ngFor="let user of users" [name]="user.name"></app-user-card>
+
+    <button id="flip-btn" class="btn btn-lg btn-success" type="button">Flip Cards</button>
 </div>

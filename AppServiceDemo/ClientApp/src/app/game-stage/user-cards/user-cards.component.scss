@@ -13,21 +13,27 @@
     height: 100%;
     top: 0;
 
-    .user-card {
-        height: 190px;
-        width: 140px;
-        user-select: none;
-        background-color: var(--main-bg-color);
-        border-color: var(--main-border-color);
-        border-width: 1px;
-        border-style: solid;
-        border-radius: 10px;
+    #flip-btn {
+        pointer-events: auto; /* required to allow clicking, since parent is set to pointer-events: none */
+        z-index: unset;
+        position: absolute;
+        bottom: 150px;
+        width: 150px;
+        height: 50px;
+        top: 0;
+        right: 0;
+        margin: 25px 35px 0 0;
     }
 
     @media screen and (min-height: 1300px) and (min-width: 2100px) {
         .user-card {
             height: 240px;
             width: 180px;
+
+            .initials-icon {
+                height: 100px;
+                width: 100px;
+            }
         }
     }
 }
