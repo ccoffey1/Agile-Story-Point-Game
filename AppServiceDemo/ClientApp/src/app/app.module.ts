@@ -12,16 +12,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StartGameComponent } from './start-game/start-game.component';
 import { GameStageComponent } from './game-stage/game-stage.component';
-import { UserCardsContainerComponent } from './game-stage/user-cards/user-cards-container.component';
-import { UserCardComponent } from './game-stage/user-cards/user-card/user-card.component'
+import { UserCardsComponent } from './game-stage/user-cards/user-cards.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StartGameComponent,
     GameStageComponent,
-    UserCardsContainerComponent,
-    UserCardComponent
+    UserCardsComponent,
   ],
   imports: [
     BrowserModule,

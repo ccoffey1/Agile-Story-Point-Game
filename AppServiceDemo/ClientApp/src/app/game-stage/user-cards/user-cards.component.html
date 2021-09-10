@@ -1,0 +1,19 @@
+<div id="player-cards-container">
+
+    <div *ngFor="let user of users" class="card" [@cardFlip]="cardsState">
+        <div class="face back">
+            <div class="initials-icon">
+                <div class="initials">
+                    {{ user.name }}
+                </div>
+            </div>
+        </div>
+        <div class="face front">
+            <div class="points-vote">
+                {{ user.pointsVote }}
+            </div>
+        </div>
+    </div>
+
+    <button id="flip-btn" class="btn btn-lg btn-success" type="button" (click)="flipCards()">Flip Cards</button>
+</div>

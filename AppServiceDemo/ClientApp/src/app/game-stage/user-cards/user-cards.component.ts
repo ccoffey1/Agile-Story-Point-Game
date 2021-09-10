@@ -1,11 +1,28 @@
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-user-cards',
-  templateUrl: './user-cards-container.component.html',
-  styleUrls: ['./user-cards-container.component.scss']
+  templateUrl: './user-cards.component.html',
+  styleUrls: ['./user-cards.component.scss'],
+  animations: [
+    trigger('cardFlip', [
+      state('default', style({
+        transform: 'none'
+      })),
+      state('flipped', style({
+        transform: 'rotateY(180deg)'
+      })),
+      transition('default => flipped', [
+        animate('400ms')
+      ]),
+      transition('flipped => default', [
+        animate('200ms')
+      ])
+    ])
+  ]
 })
-export class UserCardsContainerComponent implements OnInit {
+export class UserCardsComponent implements OnInit {
 
   cardsState: 'default' | 'flipped' | 'matched';
 
