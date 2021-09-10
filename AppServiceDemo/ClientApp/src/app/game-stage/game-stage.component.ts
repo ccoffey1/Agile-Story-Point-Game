@@ -38,10 +38,10 @@ export class GameStageComponent implements OnInit {
     { title: 'Medium Dev Work', description: "Quite a bit of work.", selected: false },
     { title: 'Tons of Dev Work', description: "Hopefully we'll finish by retirement.", selected: false },
     { title: 'QA Buffer', description: "More time for QE work.", selected: false }
-  ]
+  ];
 
   // point-selection card properties
-  pointOptions = [ 3, 5, 8, 13, 21, 32 ]
+  pointOptions = [ 3, 5, 8, 13, 21, 32 ];
 
   constructor() { }
 

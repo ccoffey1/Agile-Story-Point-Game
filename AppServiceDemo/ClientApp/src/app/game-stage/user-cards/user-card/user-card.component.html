@@ -1,9 +1,14 @@
-<div class="user-card">
-    <div class="card-inner">
+<div class="card" [@cardFlip]="cardsState">
+    <div class="face back">
         <div class="initials-icon">
             <div class="initials">
                 {{ name }}
             </div>
+        </div>
+    </div>
+    <div class="face front">
+        <div class="points-vote">
+            {{ pointsVote }}
         </div>
     </div>
 </div>
