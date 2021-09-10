@@ -1,19 +1,25 @@
 @import "bootstrap";
 
-.card-columns {
-    @include media-breakpoint-only(xl) {
-        column-count: 6;
-    }
+#player-cards-container {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    gap: 20px;
+    width: calc(100% - var(--right-side-panels-widths)); /* subtract right panel width */
+    height: 100%;
+    top: 0;
 
-    @include media-breakpoint-only(lg) {
-        column-count: 5;
-    }
-
-    @include media-breakpoint-only(md) {
-        column-count: 3;
-    }
-
-    @include media-breakpoint-only(sm) {
-        column-count: 2;
+    .user-card {
+        height: 200px;
+        width: 150px;
+        user-select: none;
+        background-color: var(--main-bg-color);
+        border-color: var(--main-border-color);
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 10px;
     }
 }

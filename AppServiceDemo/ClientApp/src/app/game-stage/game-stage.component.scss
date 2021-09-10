@@ -25,7 +25,7 @@
   border-color: var(--main-border-color);
   border-style: solid;
   height: 250px;
-  width: 350px;
+  width: var(--right-side-panels-widths);
   border-radius: 0 0 0 40px;
 
   #consensus-points {
@@ -51,7 +51,7 @@
   border-style: solid;
   border-radius: 40px 0 0 40px;
   height: 550px;
-  width: 350px;
+  width: var(--right-side-panels-widths);
   margin-top: 40px;
 }
 
@@ -125,26 +125,12 @@
   }
 }
 
-@media screen and (max-width: 1440px) {
-  #cards-container {
-    left: 0%;
-    transform: translate(-0%);
-  }
-}
-
-@media screen and (max-width: 950px) {
-  #cards-container {
-    left: 10%;
-    transform: translate(-10%);
-  }
-}
-
-@media screen and (max-height: 1300px) and (max-width: 1800px) {
+@media screen and (max-height: 1300px) and (max-width: 2100px) {
   #cards-container {
     margin-left: 0px;
 
     .card {
-      bottom: -200px;
+      bottom: -180px;
       margin: 0px 5px 0px 5px;
       width: 135px;
       &:hover {

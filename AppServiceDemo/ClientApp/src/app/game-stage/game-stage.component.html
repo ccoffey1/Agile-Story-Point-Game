@@ -23,9 +23,11 @@
   </div>
 </div>
 
+<!-- Player cards -->
+<app-user-cards></app-user-cards>
+
 <!-- Reasons -->
 <div id="reasons" class="float-right d-flex flex-column justify-content-center">
-
   <div class="reason d-flex flex-row" *ngFor="let reason of reasons; let i = index">
     <input type="checkbox" name="" id="{{i}}-check" [(ngModel)]="reason.selected" name="reason-selection" (change)="printReasons()">
     <div class="reason-container">
@@ -37,14 +39,11 @@
       </p>
     </div>
   </div>
-
 </div>
 
 <!-- Card Selection -->
 <div id="cards-container">
-
   <div class="card" *ngFor="let points of pointOptions">
     <div class="card-points">{{ points }}</div>
   </div>
-
 </div>

@@ -7,6 +7,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserCardsComponent implements OnInit {
 
+  users = [{
+    name: "hello"
+  },{
+    name: "hello"
+  },{
+    name: "hello"
+  },{
+    name: "hello"
+  },{
+    name: "hello"
+  },{
+    name: "hello"
+  },{
+    name: "hello"
+  },{
+    name: "hello"
+  },{
+    name: "hello"
+  }]
+
   constructor() { }
 
   ngOnInit(): void {
