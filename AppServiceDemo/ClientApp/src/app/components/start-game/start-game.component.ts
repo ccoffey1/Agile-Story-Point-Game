@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { GameSessionService } from '../services/game-session.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { GameSessionService } from '../../services/game-session.service';
 
 @Component({
   selector: 'app-start-game',
@@ -26,7 +27,8 @@ export class StartGameComponent {
 
   constructor(
     private modalService: NgbModal, 
-    private gameSessionService: GameSessionService) {}
+    private gameSessionService: GameSessionService,
+    private authService: AuthService) {}
 
   openBackDropCustomClass(content) {
     this.modalService.open(content, { backdropClass: 'blur-backdrop' });
@@ -51,12 +53,18 @@ export class StartGameComponent {
   createGameSession() {
     this.gameSessionService
       .createGameSession(this.gameSessionForm.value)
-      .subscribe(gameSessionResponse => console.log(gameSessionResponse))
+      .subscribe(gameSessionResponse => {
+        console.log(gameSessionResponse);
+        this.authService.setUserJwt(gameSessionResponse.playerJWT);
+      })
   }
 
   joinGameSession() {
     this.gameSessionService
       .joinGameSession(this.joinSessionForm.value)
-      .subscribe(joinSessionResponse => console.log(joinSessionResponse))
+      .subscribe(joinSessionResponse => { 
+        console.log(joinSessionResponse);
+        this.authService.setUserJwt(joinSessionResponse.playerJWT);
+      })
   }
 }

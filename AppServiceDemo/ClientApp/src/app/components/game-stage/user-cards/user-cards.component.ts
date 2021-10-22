@@ -24,7 +24,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserCardsComponent implements OnInit {
 
-  cardsState: 'default' | 'flipped' | 'matched' = 'flipped'//'default';
+  cardsState: 'default' | 'flipped' | 'matched' = 'default';
 
   users = [{
     name: "CC",

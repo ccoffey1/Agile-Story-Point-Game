@@ -10,9 +10,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { StartGameComponent } from './start-game/start-game.component';
-import { GameStageComponent } from './game-stage/game-stage.component';
-import { UserCardsComponent } from './game-stage/user-cards/user-cards.component';
+import { StartGameComponent } from './components/start-game/start-game.component';
+import { GameStageComponent } from './components/game-stage/game-stage.component';
+import { UserCardsComponent } from './components/game-stage/user-cards/user-cards.component';
 
 @NgModule({
   declarations: [
