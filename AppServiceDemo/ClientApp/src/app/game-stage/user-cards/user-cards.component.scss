@@ -1,0 +1,130 @@
+@import "bootstrap";
+
+#player-cards-container {
+    position: absolute;
+    padding: 30px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    gap: 20px;
+    width: calc(100% - var(--right-side-panels-widths)); /* subtract right panel width */
+    height: 100%;
+    top: 0;
+
+    #flip-btn {
+        pointer-events: auto; /* required to allow clicking, since parent is set to pointer-events: none */
+        z-index: unset;
+        position: absolute;
+        bottom: 150px;
+        width: 150px;
+        height: 50px;
+        top: 0;
+        right: 0;
+        margin: 25px 35px 0 0;
+    }
+
+    :host {
+        display: block;
+        perspective: 600px;
+    }
+    
+    .card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-color: var(--main-border-color);
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 10px;    
+        height: 190px;
+        width: 140px;
+        transform-style: preserve-3d;
+        transition: transform 0.3s ease-in-out;
+        background-color: var(--main-bg-color);
+    
+        &:hover {
+            transform: rotateY(180deg);
+        }
+    
+        .face {
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            backface-visibility: hidden;
+        }
+
+        .initials-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80px;
+            width: 80px;
+            background-color: var(--main-text-color);
+            border-radius: 50%;
+            
+            .initials {
+                font-size: 3em;
+            }
+        }
+    
+        .front {
+            transform: rotateY(180deg);
+
+            .card-row-top {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin: 10px;
+    
+                .points-vote {
+                    font-size: 3em;
+                    color: var(--main-text-color);
+                }
+
+                /* overriding the initials icons */
+                .initials-icon {
+                    width: 40px;
+                    height: 40px;
+
+                    .initials {
+                        font-size: 1.3em;
+                        font-weight: 400;
+                    }
+                }
+            }
+
+            .card-row-middle {
+                margin-top: 15px;
+                color: var(--main-text-color);
+                text-align: center;
+
+                .reasons-unsure {
+                    font-size: 5em;
+                    margin-top: 40px;
+                }
+            }
+        }
+    
+        .back {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    @media screen and (min-height: 1300px) and (min-width: 2100px) {
+        .user-card {
+            height: 240px;
+            width: 180px;
+
+            .initials-icon {
+                height: 100px;
+                width: 100px;
+            }
+        }
+    }
+}
