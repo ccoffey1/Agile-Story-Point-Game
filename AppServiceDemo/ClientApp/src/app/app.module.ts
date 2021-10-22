@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { StartGameComponent } from './components/start-game/start-game.component';
 import { GameStageComponent } from './components/game-stage/game-stage.component';
 import { UserCardsComponent } from './components/game-stage/user-cards/user-cards.component';
+import { UniversalAppInterceptor } from './services/interceptors/universal-app-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,11 @@ import { UserCardsComponent } from './components/game-stage/user-cards/user-card
     FontAwesomeModule,
     ClipboardModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: UniversalAppInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -53,18 +53,12 @@ export class StartGameComponent {
   createGameSession() {
     this.gameSessionService
       .createGameSession(this.gameSessionForm.value)
-      .subscribe(gameSessionResponse => {
-        console.log(gameSessionResponse);
-        this.authService.setUserJwt(gameSessionResponse.playerJWT);
-      })
+      .subscribe(gameSessionResponse => console.log(gameSessionResponse))
   }
 
   joinGameSession() {
     this.gameSessionService
       .joinGameSession(this.joinSessionForm.value)
-      .subscribe(joinSessionResponse => { 
-        console.log(joinSessionResponse);
-        this.authService.setUserJwt(joinSessionResponse.playerJWT);
-      })
+      .subscribe(joinSessionResponse => console.log(joinSessionResponse))
   }
 }

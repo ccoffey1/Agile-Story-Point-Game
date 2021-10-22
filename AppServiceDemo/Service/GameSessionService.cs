@@ -14,6 +14,7 @@ namespace AppServiceDemo.Service
     {
         Task<NewGameResponse> CreateGameAsync(string playerName, string gameSessionName);
         Task<JoinGameResponse> JoinNewPlayerToGameAsync(string playerName, string gameSessionName);
+        Task<GameSessionDataResponse> GetGameSessionDataByOwnerId(int ownerPlayerId);
     }
 
     public class GameSessionService : IGameSessionService
@@ -85,6 +86,17 @@ namespace AppServiceDemo.Service
             return new JoinGameResponse
             {
                 PlayerJWT = _playerService.GeneratePlayerJWT(player)
+            };
+        }
+
+        public async Task<GameSessionDataResponse> GetGameSessionDataByOwnerId(int ownerPlayerId)
+        {
+            var owner = await _playerRepository.GetWithGameSessionAsync(ownerPlayerId);
+
+            return new GameSessionDataResponse
+            {
+                TeamName = owner.GameSession.Name,
+                JoinCode = owner.GameSession.JoinCode
             };
         }
     }
