@@ -32,7 +32,6 @@
     
     .card {
         display: flex;
-        cursor: pointer;
         align-items: center;
         justify-content: center;
         border-color: var(--main-border-color);
@@ -57,16 +56,56 @@
             border-radius: inherit;
             backface-visibility: hidden;
         }
-    
-        .front {
-            transform: rotateY(180deg);
+
+        .initials-icon {
             display: flex;
             align-items: center;
             justify-content: center;
+            height: 80px;
+            width: 80px;
+            background-color: var(--main-text-color);
+            border-radius: 50%;
+            
+            .initials {
+                font-size: 3em;
+            }
+        }
     
-            .points-vote {
-                font-size: 4em;
+        .front {
+            transform: rotateY(180deg);
+
+            .card-row-top {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin: 10px;
+    
+                .points-vote {
+                    font-size: 3em;
+                    color: var(--main-text-color);
+                }
+
+                /* overriding the initials icons */
+                .initials-icon {
+                    width: 40px;
+                    height: 40px;
+
+                    .initials {
+                        font-size: 1.3em;
+                        font-weight: 400;
+                    }
+                }
+            }
+
+            .card-row-middle {
+                margin-top: 15px;
                 color: var(--main-text-color);
+                text-align: center;
+
+                .reasons-unsure {
+                    font-size: 5em;
+                    margin-top: 40px;
+                }
             }
         }
     
@@ -74,20 +113,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-    
-            .initials-icon {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 80px;
-                width: 80px;
-                background-color: var(--main-text-color);
-                border-radius: 50%;
-                
-                .initials {
-                    font-size: 3em;
-                }
-            }
         }
     }
 

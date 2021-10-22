@@ -24,35 +24,66 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserCardsComponent implements OnInit {
 
-  cardsState: 'default' | 'flipped' | 'matched';
+  cardsState: 'default' | 'flipped' | 'matched' = 'flipped'//'default';
 
   users = [{
     name: "CC",
-    pointsVote: 8
+    pointsVote: 8,
+    reasons: []
   },{
     name: "BG",
-    pointsVote: 13
+    pointsVote: 13,
+    reasons: [
+      "New Territory",
+      "Minimal Dev Work",
+      "QA Buffer"
+    ]
   },{
     name: "RE",
-    pointsVote: 21
+    pointsVote: 21,
+    reasons: [
+      "New Territory",
+      "Medium Dev Work"
+    ]
   },{
     name: "DD",
-    pointsVote: 8
+    pointsVote: 8,
+    reasons: [
+      "Tons of Dev Work",
+      "QA Buffer"
+    ]
   },{
     name: "MJ",
-    pointsVote: 13
+    pointsVote: 13,
+    reasons: [
+      "¯\\_(ツ)_/¯",
+      "QA Buffer"
+    ]
   },{
     name: "JT",
-    pointsVote: 13
+    pointsVote: 13,
+    reasons: [
+      "New Territory",
+      "Medium Dev Work"
+    ]
   },{
     name: "ML",
-    pointsVote: 5
+    pointsVote: 5,
+    reasons: [
+      "Medium Dev Work",
+      "QA Buffer"
+    ]
   },{
     name: "JG",
-    pointsVote: 21
+    pointsVote: 21,
+    reasons: []
   },{
     name: "RG",
-    pointsVote: 13
+    pointsVote: 13,
+    reasons: [
+      "Medium Dev Work",
+      "QA Buffer"
+    ]
   }]
 
   constructor() { }

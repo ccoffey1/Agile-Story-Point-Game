@@ -86,11 +86,4 @@ export class GameStageComponent implements OnInit {
       }, 1800)
     }
   }
-
-  /**
-   * (For debugging) Print out reasons array.
-   */
-  printReasons() {
-    console.table(this.reasons)
-  }
 }

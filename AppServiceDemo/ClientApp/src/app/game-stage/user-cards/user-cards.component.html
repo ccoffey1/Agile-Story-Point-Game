@@ -9,11 +9,27 @@
             </div>
         </div>
         <div class="face front">
-            <div class="points-vote">
-                {{ user.pointsVote }}
+            <div class="card-row-top">
+                <div class="initials-icon">
+                    <div class="initials">
+                        {{ user.name }}
+                    </div>
+                </div>
+                <div class="points-vote">
+                    {{ user.pointsVote }}
+                </div>
+            </div>
+            <div class="card-row-middle">
+                <div class="reasons">
+                    <div *ngFor="let reason of user.reasons">{{ reason }}</div>
+                    <div class="reasons-unsure" *ngIf="user.reasons.length === 0">?</div>
+                </div>
             </div>
         </div>
     </div>
 
-    <button id="flip-btn" class="btn btn-lg btn-success" type="button" (click)="flipCards()">Flip Cards</button>
+    <button id="flip-btn" 
+            class="btn btn-lg btn-success" 
+            type="button"
+            (click)="flipCards()">Flip Cards</button>
 </div>
