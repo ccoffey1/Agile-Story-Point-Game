@@ -9,6 +9,7 @@ namespace AppServiceDemo.Data.Repository
     public interface IPlayerRepository : IRepository<Player>
     {
         Task<Player> GetByNameAsync(string playerName);
+        Task<Player> GetWithGameSessionAsync(int playerId);
     }
 
     public class PlayerRepository : BaseRepository<Player, ApplicationContext>, IPlayerRepository
@@ -21,6 +22,13 @@ namespace AppServiceDemo.Data.Repository
         public async Task<Player> GetByNameAsync(string playerName)
         {
             return await _context.Players.FirstOrDefaultAsync(x => x.Name == playerName);
+        }
+
+        public async Task<Player> GetWithGameSessionAsync(int playerId)
+        {
+            return await _context.Players
+                .Include(x => x.GameSession)
+                .FirstOrDefaultAsync(x => x.Id == playerId);
         }
     }
 }

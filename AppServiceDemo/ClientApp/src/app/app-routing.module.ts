@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { GameStageComponent } from './game-stage/game-stage.component';
-import { StartGameComponent } from './start-game/start-game.component';
+import { GameStageComponent } from './components/game-stage/game-stage.component';
+import { AuthorizeGuard } from './services/guards/authorize-guard.service';
+import { StartGameComponent } from './components/start-game/start-game.component';
 
 
 const routes: Routes = [
   { path: 'start', component: StartGameComponent },
-  { path: 'game', component: GameStageComponent },
-  { path: '**', redirectTo: 'game', pathMatch: 'full' } // 404 redirects to start for now
+  { path: 'game', component: GameStageComponent, canActivate: [AuthorizeGuard] },
+  { path: '**', redirectTo: 'start', pathMatch: 'full' } // 404 redirects to start for now
 ];
 
 @NgModule({

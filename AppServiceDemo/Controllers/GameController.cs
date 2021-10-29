@@ -2,6 +2,7 @@
 using AppServiceDemo.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AppServiceDemo.Controllers
@@ -35,6 +36,21 @@ namespace AppServiceDemo.Controllers
             _logger.LogInformation($"Received request to create player {request.PlayerName} and join game with code {request.JoinCode}");
             var joinGameResponse = await _gameSessionService.JoinNewPlayerToGameAsync(request.PlayerName, request.JoinCode);
             return Ok(joinGameResponse);
+        }
+
+        [HttpGet("sessiondata")]
+        public async Task<IActionResult> GetJoinedPlayers()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            int playerId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var gameSessionDataResponse = await _gameSessionService.GetGameSessionDataByOwnerId(playerId);
+
+            if (gameSessionDataResponse == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(gameSessionDataResponse);
         }
     }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { GameSessionService } from 'src/app/services/game-session.service';
 
 @Component({
   selector: 'app-game-stage',
@@ -43,12 +44,19 @@ export class GameStageComponent implements OnInit {
   // point-selection card properties
   pointOptions = [ 3, 5, 8, 13, 21, 32 ];
 
-  constructor() { }
+  constructor(private gameSessionService: GameSessionService) { }
 
   ngOnInit(): void {
-    // TODO: Fetch dynamically
-    this.teamName = this.truncate('Funderdome', 30)
-    this.joinCode = '1d7279b1-80a4-4389-a775-3c142d2f12b3'
+    this.loadGameSessionData();
+  }
+
+  private loadGameSessionData() {
+    this.gameSessionService
+      .getGameSessionData()
+      .subscribe(gameSessionDataResponse => {
+        this.teamName = this.truncate(gameSessionDataResponse.teamName, 30);
+        this.joinCode = gameSessionDataResponse.joinCode;
+      });
   }
 
   truncate(str, n){
