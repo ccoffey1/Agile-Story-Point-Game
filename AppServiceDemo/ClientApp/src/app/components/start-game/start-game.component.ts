@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/services/auth.service';
 import { GameSessionService } from '../../services/game-session.service';
@@ -28,7 +29,8 @@ export class StartGameComponent {
   constructor(
     private modalService: NgbModal, 
     private gameSessionService: GameSessionService,
-    private authService: AuthService) {}
+    private authService: AuthService,
+    private router: Router) {}
 
   openBackDropCustomClass(content) {
     this.modalService.open(content, { backdropClass: 'blur-backdrop' });
@@ -53,7 +55,10 @@ export class StartGameComponent {
   createGameSession() {
     this.gameSessionService
       .createGameSession(this.gameSessionForm.value)
-      .subscribe(gameSessionResponse => console.log(gameSessionResponse))
+      .subscribe(gameSessionResponse => { 
+        this.router.navigate(['game']);
+        console.log(gameSessionResponse);
+      })
   }
 
   joinGameSession() {
