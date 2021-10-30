@@ -25,7 +25,7 @@ namespace AppServiceDemo.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody]CreateGameSessionRequest request)
         {
-            _logger.LogInformation($"Received request to create player {request.PlayerName} and game {request.GameSessionName}");
+            _logger.LogInformation("Received request to create player {PlayerName} and game {GameSessionName}", request.PlayerName, request.GameSessionName);
             var newGameResponse = await _gameSessionService.CreateGameAsync(request.PlayerName, request.GameSessionName);
             return Ok(newGameResponse);
         }
@@ -33,7 +33,7 @@ namespace AppServiceDemo.Controllers
         [HttpPost("join")]
         public async Task<IActionResult> Join([FromBody]JoinGameSessionRequest request)
         {
-            _logger.LogInformation($"Received request to create player {request.PlayerName} and join game with code {request.JoinCode}");
+            _logger.LogInformation("Received request to create player {PlayerName} and join game with code {JoinCode}", request.PlayerName, request.JoinCode);
             var joinGameResponse = await _gameSessionService.JoinNewPlayerToGameAsync(request.PlayerName, request.JoinCode);
             return Ok(joinGameResponse);
         }
