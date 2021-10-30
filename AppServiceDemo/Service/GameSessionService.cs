@@ -39,7 +39,7 @@ namespace AppServiceDemo.Service
 
         public async Task<NewGameResponse> CreateGameAsync(string playerName, string gameSessionName)
         {
-            _logger.LogInformation($"Attempting to create a game {gameSessionName} requested by player {playerName}");
+            _logger.LogInformation("Attempting to create a game {GameSessionName} requested by player {playerName}", gameSessionName, playerName);
 
             var player = new Player
             {
