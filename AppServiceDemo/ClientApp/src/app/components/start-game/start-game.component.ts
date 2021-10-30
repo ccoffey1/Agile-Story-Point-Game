@@ -67,5 +67,6 @@ export class StartGameComponent {
       .subscribe(joinSessionResponse => {
         this.router.navigate(['game']);
         console.log(joinSessionResponse);
-      })  }
+      })
+  }
 }
