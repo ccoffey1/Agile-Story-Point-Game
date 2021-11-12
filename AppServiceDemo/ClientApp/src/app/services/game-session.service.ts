@@ -13,7 +13,7 @@ import { GameSessionDataResponse } from '../models/response/game-session-data-re
   providedIn: 'root'
 })
 export class GameSessionService {
-
+  
   constructor(
     private http: HttpClient,
     private authService: AuthService) { }
