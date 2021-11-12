@@ -39,7 +39,7 @@ namespace AppServiceDemo.Controllers
         }
 
         [HttpGet("sessiondata")]
-        public async Task<IActionResult> GetJoinedPlayers()
+        public async Task<IActionResult> GetSessionData()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             int playerId = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier).Value);

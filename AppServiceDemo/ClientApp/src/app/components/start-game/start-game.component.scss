@@ -1,32 +1,55 @@
-#join-create-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -278px;
-  margin-left: -199px;
-  width: 398px;
-  height: 300px;
-  background-color: var(--main-bg-color);
-  border-radius: 25px;
-  border: 1px solid var(--main-border-color);
-}
+#parent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+  width: 100%;
 
-.textbox {
-  width: 300px;
-  height: 50px;
-  text-align: center;
-  font-size: x-large;
-}
+  #in-game-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 398px;
+    height: 200px;
+    margin-bottom: 15px;
+    color: var(--main-text-color);
+    background-color: var(--main-bg-color);
+    border-radius: 25px;
+    border: 1px solid var(--main-border-color);
 
-.margin-children > * {
-  margin: 10px;
-}
-
-.control-container {
-  height: 300px;
-}
-
-.spacer {
-  margin-top: 30px;
-  margin-bottom: 30px;
+    h2 {
+      text-align: center;
+      margin-top: 10px;
+    }
+  }
+  
+  #join-create-container {
+    width: 398px;
+    height: 300px;
+    background-color: var(--main-bg-color);
+    border-radius: 25px;
+    border: 1px solid var(--main-border-color);
+  }
+  
+  .textbox {
+    width: 300px;
+    height: 50px;
+    text-align: center;
+    font-size: x-large;
+  }
+  
+  .margin-children > * {
+    margin: 10px;
+  }
+  
+  .control-container {
+    height: 300px;
+  }
+  
+  .spacer {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
 }
